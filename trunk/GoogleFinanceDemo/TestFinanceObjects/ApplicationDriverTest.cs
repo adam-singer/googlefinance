@@ -12,8 +12,8 @@ namespace TestFinanceObjects
     [TestClass()]
     public class ApplicationDriverTest
     {
-        public static string user = "financeCoding@gmail.com";
-        string password = "oasdieasdfe";
+        public static string user = "USERNAMEHERE";
+        string password = "PASSWORDHERE";
 
         private TestContext testContextInstance;
 
