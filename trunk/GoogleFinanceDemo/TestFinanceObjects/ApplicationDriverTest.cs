@@ -12,8 +12,8 @@ namespace TestFinanceObjects
     [TestClass()]
     public class ApplicationDriverTest
     {
-        public static string user = "YOUNEEDTOSETME";
-        string password = "YOUNEEDTOSETME";
+        public static string user = "financeCoding@gmail.com";
+        string password = "oasdieasdfe";
 
         private TestContext testContextInstance;
 
@@ -94,6 +94,72 @@ namespace TestFinanceObjects
             }
             
         }
+
+        [TestMethod()]
+        public void CurrentPortfolioTransactionsTest()
+        {
+            ApplicationDriver target = new ApplicationDriver(user, password);
+
+            string curPort = target.CurrentPortfolio;
+            target.CurrentPortfolio = "My Portfolio";
+            Console.WriteLine(curPort);
+
+            List<PositionEntry> positions;
+            positions = target.CurrentPositions;
+            foreach (PositionEntry a in positions)
+            {
+                Console.WriteLine("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
+                Console.WriteLine(a);
+                Console.WriteLine("Title = " + a.Title.Text);
+                Console.WriteLine("GainPercentage = " + a.GainPercentage);
+                Console.WriteLine("Return1Week = " + a.Return1Week);
+                Console.WriteLine("Return1Year = " + a.Return1Year);
+                Console.WriteLine("Return3Month = " + a.Return3Month);
+                Console.WriteLine("Return3Year = " + a.Return3Year);
+                Console.WriteLine("Return4Week = " + a.Return4Week);
+                Console.WriteLine("Return5Year = " + a.Return5Year);
+                Console.WriteLine("ReturnOverall = " + a.ReturnOverall);
+                Console.WriteLine("Shares = " + a.Shares);
+                Console.WriteLine("ReturnYTD = " + a.ReturnYTD);
+
+                // XXX: Need to put for loops around the money objects cause there could be more then one.
+                Console.WriteLine("DaysGain Money = " + a.DaysGain.Money.Amount);
+                Console.WriteLine("DaysGain Currency Code = " + a.DaysGain.Money.CurrencyCode);
+
+                Console.WriteLine("CostBasis Money = " + a.CostBasis.Money.Amount);
+                Console.WriteLine("CostBasis Currency Code = " + a.CostBasis.Money.CurrencyCode);
+
+                Console.WriteLine("Gain Money = " + a.Gain.Money.Amount);
+                Console.WriteLine("Gain Currency Code = " + a.Gain.Money.CurrencyCode);
+
+                Console.WriteLine("MarketValue Money = " + a.MarketValue.Money.Amount);
+                Console.WriteLine("MarketValue Currency Code = " + a.MarketValue.Money.CurrencyCode);
+
+
+                Console.WriteLine("Symbol StockSymbol = " + a.Symbol.StockSymbol);
+                Console.WriteLine("Symbol Exchange = " + a.Symbol.Exchange);
+                Console.WriteLine("Symbol FullName = " + a.Symbol.FullName);
+
+                Console.WriteLine("FeedLink feedlink = " + a.FeedLink.Href);
+
+                //Console.WriteLine("CurrencyCode = " + a.CurrencyCode);
+                Console.WriteLine("============================TRANSACTIONS============================");
+
+                Console.WriteLine("Transactions");
+
+                foreach (TransactionEntry te in a.Transactions)
+                {
+                    Console.WriteLine("Id = " + te.Id.AbsoluteUri);
+                }
+
+                
+
+                Console.WriteLine("==========================END TRANSACTIONS==========================");
+
+                Console.WriteLine("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
+            }
+        }
+
 
         /// <summary>
         ///A test for CurrentPositions

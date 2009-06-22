@@ -20,6 +20,32 @@ namespace Finance
             Categories.Add(POSITION_CATEGORY);
         }
 
+        FinanceService service;
+        public PositionEntry(FinanceService iService)
+            : base()
+        {
+            service = iService; // Have a copy of IService to retrive the transactions list.
+            Categories.Add(POSITION_CATEGORY);
+        }
+
+        public List<TransactionEntry> Transactions
+        {
+            get
+            {
+                string absId = this.Id.AbsoluteUri;
+                TransactionQuery transactionQuery = new TransactionQuery(this.FeedLink.Href);
+                TransactionFeed transactionFeed = service.Query(transactionQuery);
+
+                List<TransactionEntry> transactions = new List<TransactionEntry>();
+                foreach (TransactionEntry transaction in transactionFeed.Entries)
+                {
+                    transactions.Add(transaction);
+                }
+
+                return transactions;
+            }
+        }
+
         public FeedLink FeedLink
         {
             get

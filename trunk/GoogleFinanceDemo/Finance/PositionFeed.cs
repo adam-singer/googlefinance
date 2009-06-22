@@ -8,14 +8,16 @@ namespace Finance
 {
     public class PositionFeed : AbstractFeed
     {
+        IService iService;
         public PositionFeed(Uri uriBase, IService iService)
             : base(uriBase, iService)
         {
+            this.iService = iService; 
         }
 
         public override AtomEntry CreateFeedEntry()
         {
-            return new PositionEntry();
+            return new PositionEntry(this.iService as FinanceService);
         }
     }
 }

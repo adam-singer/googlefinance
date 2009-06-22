@@ -160,6 +160,11 @@ namespace Finance
             }
         }
 
+        //public List<TransactionEntry> CurrentTransactions
+        //{
+        //    get { return null; }
+        //}
+
         /// <summary>
         /// Getter of the current positions in the view of the current portfolio. 
         /// </summary>
