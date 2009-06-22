@@ -21,10 +21,16 @@ namespace Finance
 
             int i = e.Uri.AbsoluteUri.IndexOf("/" + "portfolios");
             int p = e.Uri.AbsoluteUri.IndexOf("/" + "positions");
+            int t = e.Uri.AbsoluteUri.IndexOf("/" + "transactions");
+
             // TODO: This sucks, it needs to be changed to parse out the Feeds correcly.
             if (e == null)
             {
                 throw new ArgumentNullException("e");
+            }
+            else if (e.Uri.AbsoluteUri.IndexOf("/" + "transactions") != -1)
+            {
+                e.Feed = new TransactionFeed(e.Uri, e.Service);
             }
             else if (e.Uri.AbsoluteUri.IndexOf("/" + "positions") != -1)
             {
@@ -34,11 +40,8 @@ namespace Finance
             {
                 e.Feed = new PortfolioFeed(e.Uri, e.Service);
             }
-            
-
         }
 
-     
         public PortfolioFeed Query(PortfolioQuery feedQuery)
         {
             return base.Query(feedQuery) as PortfolioFeed;
@@ -49,5 +52,9 @@ namespace Finance
             return base.Query(feedQuery) as PositionFeed;
         }
 
+        public TransactionFeed Query(TransactionQuery feedQuery)
+        {
+            return base.Query(feedQuery) as TransactionFeed;
+        }
     }
 }
