@@ -34,8 +34,6 @@ namespace Finance
 
         }
 
-        // TODO: Create real types, the strings are temporary. Also create exceptions for handling errors of getters.
-
         public TransactionTypes Type {
             
             get
