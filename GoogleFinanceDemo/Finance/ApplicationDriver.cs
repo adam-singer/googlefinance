@@ -40,7 +40,7 @@ namespace Finance
             // Debugging requests and inserts.
             GDataLoggingRequestFactory factoryLogging = new GDataLoggingRequestFactory("finance", ApplicationDriver.Name);
             factoryLogging.MethodOverride = true;
-            factoryLogging.CombinedLogFileName = @"c:\temp\xmllog.log";
+            factoryLogging.CombinedLogFileName = @"c:\xmllog.log";
             ApplicationDriver.service.RequestFactory = factoryLogging;
 #endif 
         }
@@ -121,7 +121,7 @@ namespace Finance
         /// <summary>
         /// Get or Set the current portfolio.
         /// </summary>
-        public string CurrentPortfolio
+        public string CurrentPortfolioName
         {
             // TODO: Should return List of Portfolio objects instead of just the Title of the Portfolio.
             get
@@ -202,6 +202,50 @@ namespace Finance
                 }
                 return null; 
             }
+        }
+
+       
+        /// <summary>
+        /// Create a portfolio 
+        /// </summary>
+        /// <param name="title">Name of the portfolio</param>
+        /// <param name="portfolioData">Settings for the portfolio</param>
+        /// <returns>Returns the response from the server</returns>
+        public PortfolioEntry CreatePortfolio(string title, PortfolioData portfolioData)
+        {
+            // Create a new entry.
+            PortfolioEntry entry = new PortfolioEntry();
+            // Set the name of the portfolio
+            entry.Title.Text = title;
+            // Set the portfolio data
+            entry.PortfolioData = portfolioData;
+
+            // Default to USD
+            if (entry.PortfolioData.CurrencyCode.Length == 0) entry.PortfolioData.CurrencyCode = "USD";
+
+            // Return the response from the server.
+            return service.Insert(new Uri(FinanceNamespace.PORTFOLIOS), entry);
+        }
+
+        /// <summary>
+        /// Create a portfolio
+        /// </summary>
+        /// <param name="title">Name of the portfolio</param>
+        /// <returns>Returns the response from the server</returns>
+        public PortfolioEntry CreatePortfolio(string title)
+        {
+            return CreatePortfolio(title, new PortfolioData() { CurrencyCode = "USD" });
+        }
+
+        /// <summary>
+        /// Create a portfolio
+        /// </summary>
+        /// <param name="title">Name of the portfolio</param>
+        /// <param name="currencyCode">Currency code of the portfolio</param>
+        /// <returns></returns>
+        public PortfolioEntry CreatePortfolio(string title, string currencyCode)
+        {
+            return CreatePortfolio(title, new PortfolioData() { CurrencyCode = currencyCode });
         }
     }
 }

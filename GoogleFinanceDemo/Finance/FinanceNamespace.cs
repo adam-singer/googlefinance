@@ -8,31 +8,25 @@ namespace Finance
 {
     public class FinanceNamespace
     {
-      /** Google Finance (GF) namespace */
-      public const String GF = "http://schemas.google.com/finance/2007";
+        public const string PREFIX = "gf";
+        public const string NAMESPACE = "http://schemas.google.com/finance/2007";
 
-      /** Google Finance (GF) namespace prefix */
-      public const String GF_PREFIX = GF + "#";
+        public const string PORTFOLIOS = "http://finance.google.com/finance/feeds/default/portfolios";
 
-      /** Google Finance (GF) namespace alias */
-      public const String GF_ALIAS = "gf";
-
-      /** XML writer namespace for Google Finance (GF) */
-      //public static XmlNamespace GF_NS = new XmlNamespace(GF_ALIAS, GF);
-      public XmlNamespaceManager GF_NS;
-
-
-
-      // NOTE: Check out GDataSpreadsheetsNameTable for proper namespace constants
-      public const string Prefix = "gf";
-      public const string NSGFinance = "http://schemas.google.com/finance/2007";
-
-
-      public FinanceNamespace()
-      {
-          NameTable nt = new NameTable();
-          GF_NS = new XmlNamespaceManager(nt);
-          GF_NS.AddNamespace(GF_ALIAS, GF);
-      }
+        public const string PORTFOLIODATA = "portfolioData";
+        public const string PORTFOLIOTERM = NAMESPACE + "#portfolio";
+ 
+        public const string CURRENCYCODE = "currencyCode";
+        public const string GAINPERCENTAGE = "gainPercentage";
+        public const string RETURN1W = "return1w";
+        public const string RETURN4W = "return4w";
+        public const string RETURN3M = "return3m";
+        public const string RETURNYTD = "returnYTD";
+        public const string RETURN1Y = "return1y";
+        public const string RETURN3Y = "return3y";
+        public const string RETURN5Y = "return5y";
+        public const string RETURNOVERALL = "returnOverall";
+      
+     
     }
 }

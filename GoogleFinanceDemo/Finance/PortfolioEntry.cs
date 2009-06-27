@@ -10,108 +10,49 @@ using Google.GData.GoogleBase;
 
 namespace Finance
 {
-
+    /// <summary>
+    /// PortfolioEntry API class for defining entries in a portfolio feed.
+    /// </summary>
     public class PortfolioEntry : AbstractEntry
     {
+        /// <summary>
+        /// Category used to label entries that contain portfolio extension data.
+        /// </summary>
         public static AtomCategory PORTFOLIO_CATEGORY
-        = new AtomCategory("http://schemas.google.com/finance/2007#portfolio",
+        = new AtomCategory(FinanceNamespace.PORTFOLIOTERM,
                            new AtomUri(BaseNameTable.gKind));
 
+        /// <summary>
+        /// Constructs a new PortfolioEntry instance with the appropriate category 
+        /// and extensions to indicate that it is a portfolio.
+        /// </summary>
         public PortfolioEntry()
             : base()
         {
             Categories.Add(PORTFOLIO_CATEGORY);
+            this.AddExtension(new PortfolioData());
         }
 
-        public string CurrencyCode
+        /// <summary>
+        /// The portfolioData element in this entry. 
+        /// </summary>
+        public PortfolioData PortfolioData
         {
             get
+            
             {
-                IExtensionElementFactory i = FindExtension("portfolioData", "http://schemas.google.com/finance/2007");
-                return ((XmlExtension)i).Node.Attributes["currencyCode"].Value; 
+                // returns null if no extension is found.
+                return FindExtension(FinanceNamespace.PORTFOLIODATA,
+                                      FinanceNamespace.NAMESPACE) as PortfolioData;
             }
-        }
-
-        public double GainPercentage
-        {
-            get
+            set
             {
-                return ReturnDoubleAttribute("gainPercentage");
-            }
+                // creates an extension if one doesnt exists
+                // replaces the extension if one does exist.
+                ReplaceExtension(FinanceNamespace.PORTFOLIODATA,
+                                  FinanceNamespace.NAMESPACE,
+                                  value);
+            } 
         }
-
-        public double Return1Week
-        {
-            get
-            {
-                return ReturnDoubleAttribute("return1w");
-            }
-        }
-
-        public double Return4Week
-        {
-            get
-            {
-                return ReturnDoubleAttribute("return4w");
-            }
-        }
-
-        public double Return3Month
-        {
-            get
-            {
-                return ReturnDoubleAttribute("return3m");
-            }
-        }
-
-        public double ReturnYTD
-        {
-            get
-            {
-                return ReturnDoubleAttribute("returnYTD");
-            }
-        }
-
-        public double Return1Year
-        {
-            get
-            {
-                return ReturnDoubleAttribute("return1y");
-            }
-
-        }
-
-        public double Return3Year
-        {
-
-            get
-            {
-                return ReturnDoubleAttribute("return3y");
-            }
-        }
-
-        public double Return5Year
-        {
-
-            get
-            {
-                return ReturnDoubleAttribute("return5y");
-            }
-        }
-
-        public double ReturnOverall
-        {
-            get
-            {
-                return ReturnDoubleAttribute("returnOverall");
-            }
-        }
-
-        public double ReturnDoubleAttribute(string attributeName)
-        {
-            IExtensionElementFactory i = FindExtension("portfolioData", "http://schemas.google.com/finance/2007");
-            return double.Parse(((XmlExtension)i).Node.Attributes[attributeName].Value);
-        }
-
     }
 }

@@ -16,6 +16,7 @@ namespace Finance
         public override AtomEntry CreateFeedEntry()
         {
             return new PortfolioEntry();
+            //return new PortfolioEntryTest();
         }
 
         protected override void HandleExtensionElements(ExtensionElementEventArgs e, AtomFeedParser parser)
