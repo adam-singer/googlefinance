@@ -7,6 +7,10 @@ using Google.GData.Client;
 using System.Text;
 using Google.GData.Extensions;
 
+/////////////////////////////
+// TODO: Create Real Tests //
+/////////////////////////////
+
 namespace TestFinanceObjects
 {
     /// <summary>
@@ -154,10 +158,10 @@ namespace TestFinanceObjects
 
                 Console.WriteLine("Transactions");
 
-                foreach (TransactionEntry te in a.Transactions)
-                {
-                    Console.WriteLine("Id = " + te.Id.AbsoluteUri);
-                }
+                //foreach (TransactionEntry te in a.Transactions)
+                //{
+                //    Console.WriteLine("Id = " + te.Id.AbsoluteUri);
+                //}
 
                 
 
@@ -297,8 +301,51 @@ namespace TestFinanceObjects
                 Console.WriteLine(m.Amount);
                 Console.WriteLine(m.CurrencyCode);
             }
+
+            PositionFeed feed2 = ParsePositionFeed(xml);
+            PositionEntry enPositionTest = feed.Entries[0] as PositionEntry;
+
+
         }
 
+        [TestMethod()]
+        public void TestPositionEntry2()
+        {
+            PositionEntry pe;
+            PositionFeed pf;
+            FinanceService service = new FinanceService("test");
+            service.setUserCredentials(user, password);
+            GDataLoggingRequestFactory factoryLogging = new GDataLoggingRequestFactory("finance", ApplicationDriver.Name);
+            factoryLogging.MethodOverride = true;
+            factoryLogging.CombinedLogFileName = @"c:\xmllog.log";
+            service.RequestFactory = factoryLogging;
+
+            //pf = new PositionFeed(new Uri("http://finance.google.com/finance/feeds/financeCoding@gmail.com/portfolios/1/positions"), service);
+            pf = service.Query(new PositionQuery("http://finance.google.com/finance/feeds/default/portfolios/1/positions?returns=true"));
+
+            foreach (PositionEntry p in pf.Entries)
+            {
+                Console.WriteLine(p.PositionData.Shares);
+                Console.WriteLine(p.TransactionHerf);
+
+                TransactionFeed tf = service.Query(new TransactionQuery(p.TransactionHerf + "?returns=true"));
+                foreach (TransactionEntry te in tf.Entries)
+                {
+                    Console.WriteLine(tf.Feed);
+                }
+            }
+
+
+            
+        }
+
+        private PositionFeed ParsePositionFeed(string xml)
+        {
+            byte[] bytes = new UTF8Encoding().GetBytes(xml);
+            PositionFeed feed = new PositionFeed(new Uri("http://finance.google.com/finance/feeds/financeCoding@gmail.com/portfolios/1/positions"), new FinanceService("Test"));
+            feed.Parse(new MemoryStream(bytes), AlternativeFormat.Atom);
+            return feed;
+        }
         private PortfolioFeed Parse(string xml)
         {
             byte[] bytes = new UTF8Encoding().GetBytes(xml);

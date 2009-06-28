@@ -12,36 +12,30 @@ namespace Finance
 
     public class Symbol : SimpleElement
     {
-        public Symbol() : base("symbol", "gf", "http://schemas.google.com/finance/2007")
+        public Symbol() : base(FinanceNamespace.SYMBOL, FinanceNamespace.PREFIX_FINANCE, FinanceNamespace.NAMESPACE_FINANCE)
         {
-            
+            Attributes.Add(FinanceNamespace.FULLNAME, null);
+            Attributes.Add(FinanceNamespace.EXCHANGE, null);
+            Attributes.Add(FinanceNamespace.SYMBOL, null);
         }
 
         public Symbol(string initValue)
-            : base("symbol", "gf", "http://schemas.google.com/finance/2007", initValue)
+            : base(FinanceNamespace.SYMBOL, FinanceNamespace.PREFIX_FINANCE, FinanceNamespace.NAMESPACE_FINANCE, initValue)
         {
-            
+            Attributes.Add(FinanceNamespace.FULLNAME, null);
+            Attributes.Add(FinanceNamespace.EXCHANGE, null);
+            Attributes.Add(FinanceNamespace.SYMBOL, null);
         }
-
-        public override IExtensionElementFactory CreateInstance(XmlNode node, AtomFeedParser parser)
-        {
-            Symbol e = base.CreateInstance(node, parser) as Symbol;
-
-            return e;
-        }
-
-        //public Symbol(AbstractEntry ae) :base()
-        //{
-        //    ae.ExtensionFactories
-        //}
 
         public string FullName
         {
             get
             {
-
-                //return ReturnStringAttribute("fullName");
-                return Attributes["fullName"] as string;
+                return Attributes[FinanceNamespace.FULLNAME] as string;
+            }
+            set
+            {
+                Attributes[FinanceNamespace.FULLNAME] = value;
             }
         }
 
@@ -49,26 +43,23 @@ namespace Finance
         {
             get
             {
-                //return ReturnStringAttribute("exchange");
-                return Attributes["exchange"] as string;
+                return Attributes[FinanceNamespace.EXCHANGE] as string;
+            }
+            set
+            {
+                Attributes[FinanceNamespace.EXCHANGE] = value;
             }
         }
         public string StockSymbol
         {
             get
             {
-                //return ReturnStringAttribute("symbol");
-                return Attributes["symbol"] as string;
+                return Attributes[FinanceNamespace.SYMBOL] as string;
+            }
+            set
+            {
+                Attributes[FinanceNamespace.SYMBOL] = value;
             }
         }
-
-
-
-        //public string ReturnStringAttribute(string attributeName)
-        //{
-        //    IExtensionElementFactory i = FindExtension("symbol", "http://schemas.google.com/finance/2007");
-        //    return ((XmlExtension)i).Node.Attributes[attributeName].Value as string;
-        //}
-
     }
 }
