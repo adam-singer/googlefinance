@@ -31,6 +31,7 @@ namespace Finance
         {
             Categories.Add(PORTFOLIO_CATEGORY);
             this.AddExtension(new PortfolioData());
+            this.AddExtension(new FeedLink());
             //this.AddExtension(new CostBasis());
         }
 
@@ -53,6 +54,21 @@ namespace Finance
                 ReplaceExtension(FinanceNamespace.PORTFOLIODATA,
                                   FinanceNamespace.NAMESPACE_FINANCE,
                                   value);
+            }
+        }
+
+
+        public FeedLink FeedLink
+        {
+            get
+            {
+                return FindExtension(FinanceNamespace.FEEDLINK,
+                    FinanceNamespace.NAMESPACE_GDATA) as FeedLink;
+            }
+            set
+            {
+                ReplaceExtension(FinanceNamespace.FEEDLINK,
+                    FinanceNamespace.NAMESPACE_GDATA, value);
             }
         }
 

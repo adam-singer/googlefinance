@@ -17,7 +17,8 @@ namespace Finance
 
         public override AtomEntry CreateFeedEntry()
         {
-            return new PositionEntry(this.iService as FinanceService);
+            //return new PositionEntry(this.iService as FinanceService);
+            return new PositionEntry();
         }
     }
 }
