@@ -57,6 +57,7 @@
     <Compile Include="Gain.cs" />
     <Compile Include="MarketValue.cs" />
     <Compile Include="Money.cs" />
+    <Compile Include="MoneyContainer.cs" />
     <Compile Include="PortfolioData.cs" />
     <Compile Include="PortfolioEntry.cs" />
     <Compile Include="PortfolioFeed.cs" />

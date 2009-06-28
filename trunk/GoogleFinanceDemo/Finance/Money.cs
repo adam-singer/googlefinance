@@ -11,38 +11,40 @@ namespace Finance
     public class Money : SimpleElement
     {
         public Money()
-            : base("money", "gd", "http://schemas.google.com/finance/2007")
+            : base(FinanceNamespace.MONEY, FinanceNamespace.PREFIX_GDATA, FinanceNamespace.NAMESPACE_GDATA)
         {
-            Attributes.Add("amount", null);
-            Attributes.Add("currencyCode", null);
+            Attributes.Add(FinanceNamespace.AMOUNT, null);
+            Attributes.Add(FinanceNamespace.CURRENCYCODE, null);
 
         }
 
         public Money(string initValue)
-            : base("money", "gd", "http://schemas.google.com/finance/2007", initValue)
+            : base(FinanceNamespace.MONEY, FinanceNamespace.PREFIX_GDATA, FinanceNamespace.NAMESPACE_GDATA, initValue)
         {
-            Attributes.Add("amount", null);
-            Attributes.Add("currencyCode", null);
+            Attributes.Add(FinanceNamespace.AMOUNT, null);
+            Attributes.Add(FinanceNamespace.CURRENCYCODE, null);
         }
 
-        public Money(XmlNode node)
-            : base("money", "gd", "http://schemas.google.com/finance/2007")
-        {
-            Attributes.Add("amount", null);
-            Attributes.Add("currencyCode", null);
-            Amount = float.Parse(node.Attributes["amount"].Value);
-            CurrencyCode = node.Attributes["currencyCode"].Value as string;
-        }
+        
+
+        //public Money(XmlNode node)
+        //    : base(FinanceNamespace.MONEY, FinanceNamespace.PREFIX_GDATA, FinanceNamespace.NAMESPACE_GDATA)
+        //{
+        //    Attributes.Add(FinanceNamespace.AMOUNT, null);
+        //    Attributes.Add(FinanceNamespace.CURRENCYCODE, null);
+        //    Amount = float.Parse(node.Attributes["amount"].Value);
+        //    CurrencyCode = node.Attributes["currencyCode"].Value as string;
+        //}
 
         public float Amount
         {
             get
             {
-                return float.Parse(Attributes["amount"] as string);
+                return float.Parse(Attributes[FinanceNamespace.AMOUNT] as string);
             }
             set
             {
-                Attributes["amount"] = value.ToString();
+                Attributes[FinanceNamespace.AMOUNT] = value.ToString();
             }
         }
 
@@ -50,11 +52,11 @@ namespace Finance
         {
             get
             {
-                return Attributes["currencyCode"] as string;
+                return Attributes[FinanceNamespace.CURRENCYCODE] as string;
             }
             set
             {
-                Attributes["currencyCode"] = value;
+                Attributes[FinanceNamespace.CURRENCYCODE] = value;
             }
         }
 

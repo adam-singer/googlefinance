@@ -8,13 +8,14 @@ namespace Finance
 {
     public class FinanceNamespace
     {
-        public const string PREFIX = "gf";
-        public const string NAMESPACE = "http://schemas.google.com/finance/2007";
+        public const string PREFIX_FINANCE = "gf";
+        public const string NAMESPACE_FINANCE = "http://schemas.google.com/finance/2007";
 
+        // TODO: rename this to PORTFOLIOFEEDS
         public const string PORTFOLIOS = "http://finance.google.com/finance/feeds/default/portfolios";
 
         public const string PORTFOLIODATA = "portfolioData";
-        public const string PORTFOLIOTERM = NAMESPACE + "#portfolio";
+        public const string PORTFOLIOTERM = NAMESPACE_FINANCE + "#portfolio";
  
         public const string CURRENCYCODE = "currencyCode";
         public const string GAINPERCENTAGE = "gainPercentage";
@@ -26,7 +27,17 @@ namespace Finance
         public const string RETURN3Y = "return3y";
         public const string RETURN5Y = "return5y";
         public const string RETURNOVERALL = "returnOverall";
-      
-     
+
+        public const string COSTBASIS = "costBasis";
+        public const string DAYSGAIN = "daysGain";
+        public const string GAIN = "gain";
+        public const string MARKETVALUE = "marketValue";
+
+        public const string PREFIX_GDATA = "gd";
+        public const string NAMESPACE_GDATA = "http://schemas.google.com/g/2005";
+        public const string MONEY = "money";
+        public const string AMOUNT = "amount";
+       
+
     }
 }

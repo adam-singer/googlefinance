@@ -8,34 +8,12 @@ using System.Xml;
 
 namespace Finance
 {
-    public class Gain : SimpleElement
+    public class Gain : MoneyContainer
     {
-        //XXX: Need to support more then one node of money... for instance,
-        // when a security's default currency differs from the portfolio's
-        // , then a second money element is included.. we need to check for that.
          public Gain()
-            : base("gain", "gf", "http://schemas.google.com/finance/2007")
+            : base(FinanceNamespace.GAIN, FinanceNamespace.PREFIX_FINANCE, FinanceNamespace.NAMESPACE_FINANCE)
         {
             
         }
-
-         public Gain(string initValue)
-             : base("gain", "gf", "http://schemas.google.com/finance/2007", initValue)
-        {
-            
-        }
-
-         public Money Money
-         {
-             get;
-             set;
-         }
-
-         public override IExtensionElementFactory CreateInstance(XmlNode node, AtomFeedParser parser)
-         {
-             Gain e = base.CreateInstance(node, parser) as Gain;
-             e.Money = new Money(node["gd:money"]);
-             return e;
-         }
     }
 }
