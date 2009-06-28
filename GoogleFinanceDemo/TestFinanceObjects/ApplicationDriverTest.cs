@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using Google.GData.Client;
 using System.Text;
+using Google.GData.Extensions;
 
 namespace TestFinanceObjects
 {
@@ -128,18 +129,18 @@ namespace TestFinanceObjects
                 Console.WriteLine("Shares = " + a.Shares);
                 Console.WriteLine("ReturnYTD = " + a.ReturnYTD);
 
-                // XXX: Need to put for loops around the money objects cause there could be more then one.
-                Console.WriteLine("DaysGain Money = " + a.DaysGain.Money.Amount);
-                Console.WriteLine("DaysGain Currency Code = " + a.DaysGain.Money.CurrencyCode);
+                //// XXX: Need to put for loops around the money objects cause there could be more then one.
+                //Console.WriteLine("DaysGain Money = " + a.DaysGain.Money.Amount);
+                //Console.WriteLine("DaysGain Currency Code = " + a.DaysGain.Money.CurrencyCode);
 
-                Console.WriteLine("CostBasis Money = " + a.CostBasis.Money.Amount);
-                Console.WriteLine("CostBasis Currency Code = " + a.CostBasis.Money.CurrencyCode);
+                //Console.WriteLine("CostBasis Money = " + a.CostBasis.Money.Amount);
+                //Console.WriteLine("CostBasis Currency Code = " + a.CostBasis.Money.CurrencyCode);
 
-                Console.WriteLine("Gain Money = " + a.Gain.Money.Amount);
-                Console.WriteLine("Gain Currency Code = " + a.Gain.Money.CurrencyCode);
+                //Console.WriteLine("Gain Money = " + a.Gain.Money.Amount);
+                //Console.WriteLine("Gain Currency Code = " + a.Gain.Money.CurrencyCode);
 
-                Console.WriteLine("MarketValue Money = " + a.MarketValue.Money.Amount);
-                Console.WriteLine("MarketValue Currency Code = " + a.MarketValue.Money.CurrencyCode);
+                //Console.WriteLine("MarketValue Money = " + a.MarketValue.Money.Amount);
+                //Console.WriteLine("MarketValue Currency Code = " + a.MarketValue.Money.CurrencyCode);
 
 
                 Console.WriteLine("Symbol StockSymbol = " + a.Symbol.StockSymbol);
@@ -198,17 +199,17 @@ namespace TestFinanceObjects
                 Console.WriteLine("ReturnYTD = " + a.ReturnYTD);
                
                 // XXX: Need to put for loops around the money objects cause there could be more then one.
-                Console.WriteLine("DaysGain Money = " + a.DaysGain.Money.Amount);
-                Console.WriteLine("DaysGain Currency Code = " + a.DaysGain.Money.CurrencyCode);
+                //Console.WriteLine("DaysGain Money = " + a.DaysGain.Money.Amount);
+                //Console.WriteLine("DaysGain Currency Code = " + a.DaysGain.Money.CurrencyCode);
 
-                Console.WriteLine("CostBasis Money = " + a.CostBasis.Money.Amount);
-                Console.WriteLine("CostBasis Currency Code = " + a.CostBasis.Money.CurrencyCode);
+                //Console.WriteLine("CostBasis Money = " + a.CostBasis.Money.Amount);
+                //Console.WriteLine("CostBasis Currency Code = " + a.CostBasis.Money.CurrencyCode);
 
-                Console.WriteLine("Gain Money = " + a.Gain.Money.Amount);
-                Console.WriteLine("Gain Currency Code = " + a.Gain.Money.CurrencyCode);
+                //Console.WriteLine("Gain Money = " + a.Gain.Money.Amount);
+                //Console.WriteLine("Gain Currency Code = " + a.Gain.Money.CurrencyCode);
 
-                Console.WriteLine("MarketValue Money = " + a.MarketValue.Money.Amount);
-                Console.WriteLine("MarketValue Currency Code = " + a.MarketValue.Money.CurrencyCode);
+                //Console.WriteLine("MarketValue Money = " + a.MarketValue.Money.Amount);
+                //Console.WriteLine("MarketValue Currency Code = " + a.MarketValue.Money.CurrencyCode);
 
 
                 Console.WriteLine("Symbol StockSymbol = " + a.Symbol.StockSymbol);
@@ -273,6 +274,29 @@ namespace TestFinanceObjects
             PortfolioEntry enTest = feed.Entries[0] as PortfolioEntry;
             //enTest.portfolioDataElement.CurrencyCode
 
+            ExtensionCollection<Money> i = enTest.PortfolioData.CostBasis.Money;
+
+            ExtensionCollection<Money> ii = enTest.PortfolioData.DaysGain.Money;
+            ExtensionCollection<Money> iii = enTest.PortfolioData.Gain.Money;
+            ExtensionCollection<Money> iiii = enTest.PortfolioData.MarketValue.Money;
+
+            foreach (Money m in ii)
+            {
+                Console.WriteLine(m.Amount);
+                Console.WriteLine(m.CurrencyCode);
+            }
+
+            foreach (Money m in iii)
+            {
+                Console.WriteLine(m.Amount);
+                Console.WriteLine(m.CurrencyCode);
+            }
+
+            foreach (Money m in iiii)
+            {
+                Console.WriteLine(m.Amount);
+                Console.WriteLine(m.CurrencyCode);
+            }
         }
 
         private PortfolioFeed Parse(string xml)

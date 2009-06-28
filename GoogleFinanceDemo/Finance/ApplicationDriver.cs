@@ -204,7 +204,7 @@ namespace Finance
             }
         }
 
-       
+        #region Methods to create a portfolio
         /// <summary>
         /// Create a portfolio 
         /// </summary>
@@ -247,5 +247,6 @@ namespace Finance
         {
             return CreatePortfolio(title, new PortfolioData() { CurrencyCode = currencyCode });
         }
+        #endregion 
     }
 }

@@ -34,9 +34,10 @@ namespace Finance
 
          public override IExtensionElementFactory CreateInstance(XmlNode node, AtomFeedParser parser)
          {
-             Commission e = base.CreateInstance(node, parser) as Commission;
-             e.Money = new Money(node["gd:money"]);
-             return e;
+             //Commission e = base.CreateInstance(node, parser) as Commission;
+             //e.Money = new Money(node["gd:money"]);
+             //return e;
+             return null;
          }
 
     }

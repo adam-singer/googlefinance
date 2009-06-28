@@ -9,15 +9,21 @@ namespace Finance
     /// <summary>
     /// gf:portfolioData schema extension describing the portfolio. Contains an overview of a portfolio, including currency, returns, and performance statistics.
     /// </summary>
-    public class PortfolioData : SimpleElement
+    //public class PortfolioData : SimpleElement
+    public class PortfolioData : SimpleContainer // We are using a simple container cause gf:portfolioData can have childern nodes.   
     {
         #region Constructor
         /// <summary>
         /// Default constructor.
         /// </summary>
         public PortfolioData() :
-            base(FinanceNamespace.PORTFOLIODATA, FinanceNamespace.PREFIX, FinanceNamespace.NAMESPACE)
+            base(FinanceNamespace.PORTFOLIODATA, FinanceNamespace.PREFIX_FINANCE, FinanceNamespace.NAMESPACE_FINANCE)
         {
+            this.ExtensionFactories.Add(new CostBasis());
+            this.ExtensionFactories.Add(new DaysGain());
+            this.ExtensionFactories.Add(new Gain());
+            this.ExtensionFactories.Add(new MarketValue());
+
             Attributes.Add(FinanceNamespace.CURRENCYCODE, null);
             Attributes.Add(FinanceNamespace.GAINPERCENTAGE, null);
             Attributes.Add(FinanceNamespace.RETURN1W, null);
@@ -30,16 +36,69 @@ namespace Finance
             Attributes.Add(FinanceNamespace.RETURNOVERALL, null);
         }
 
-        /// <summary>
-        /// Constructs an PortfolioData that contains inner xml element 
-        /// </summary>
-        /// <param name="value">Inner Xml Value</param>
-        public PortfolioData(string value) :
-            base(FinanceNamespace.PORTFOLIODATA, FinanceNamespace.PREFIX, FinanceNamespace.NAMESPACE, value)
-        {
-            // NOTE: should this be removed? I do not think that portfolioData can contain an inner value.
-        }
+       
         #endregion 
+
+        public DaysGain DaysGain
+        {
+            get
+            {
+                return FindExtension(FinanceNamespace.DAYSGAIN,
+                                         FinanceNamespace.NAMESPACE_FINANCE) as DaysGain;
+            }
+            set
+            {
+                ReplaceExtension(FinanceNamespace.DAYSGAIN,
+                                    FinanceNamespace.NAMESPACE_FINANCE,
+                                    value);
+            }
+        }
+
+        public CostBasis CostBasis
+        {
+            get
+            {
+                return FindExtension(FinanceNamespace.COSTBASIS,
+                                         FinanceNamespace.NAMESPACE_FINANCE) as CostBasis;
+            }
+            set
+            {
+                ReplaceExtension(FinanceNamespace.COSTBASIS,
+                                    FinanceNamespace.NAMESPACE_FINANCE,
+                                    value);
+            }
+        }
+
+        public Gain Gain
+        {
+            get
+            {
+                return FindExtension(FinanceNamespace.GAIN,
+                                         FinanceNamespace.NAMESPACE_FINANCE) as Gain;
+            }
+            set
+            {
+                ReplaceExtension(FinanceNamespace.GAIN,
+                                    FinanceNamespace.NAMESPACE_FINANCE,
+                                    value);
+            }
+        }
+
+        public MarketValue MarketValue
+        {
+            get
+            {
+                return FindExtension(FinanceNamespace.MARKETVALUE,
+                                         FinanceNamespace.NAMESPACE_FINANCE) as MarketValue;
+            }
+            set
+            {
+                ReplaceExtension(FinanceNamespace.MARKETVALUE,
+                                    FinanceNamespace.NAMESPACE_FINANCE,
+                                    value);
+            }
+        }
+
 
         #region Properties
         /// <summary>

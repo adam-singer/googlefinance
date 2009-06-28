@@ -31,6 +31,7 @@ namespace Finance
         {
             Categories.Add(PORTFOLIO_CATEGORY);
             this.AddExtension(new PortfolioData());
+            //this.AddExtension(new CostBasis());
         }
 
         /// <summary>
@@ -43,16 +44,75 @@ namespace Finance
             {
                 // returns null if no extension is found.
                 return FindExtension(FinanceNamespace.PORTFOLIODATA,
-                                      FinanceNamespace.NAMESPACE) as PortfolioData;
+                                      FinanceNamespace.NAMESPACE_FINANCE) as PortfolioData;
             }
             set
             {
                 // creates an extension if one doesnt exists
                 // replaces the extension if one does exist.
                 ReplaceExtension(FinanceNamespace.PORTFOLIODATA,
-                                  FinanceNamespace.NAMESPACE,
+                                  FinanceNamespace.NAMESPACE_FINANCE,
                                   value);
-            } 
+            }
         }
+
+        #region Public Properties for PortfolioData Properties
+        public string CurrencyCode
+        {
+            get { return PortfolioData.CurrencyCode; }
+        }
+        public double GainPercentage
+        {
+            get { return PortfolioData.GainPercentage; }
+        }
+        public double Return1Week
+        {
+            get { return PortfolioData.Return1Week; }
+        }
+        public double Return4Week
+        {
+            get { return PortfolioData.Return4Week; }
+        }
+        public double Return3Month
+        {
+            get { return PortfolioData.Return3Month; }
+        }
+        public double ReturnYTD
+        {
+            get { return PortfolioData.ReturnYTD; }
+        }
+        public double Return1Year
+        {
+            get { return PortfolioData.Return1Year; }
+        }
+        public double Return3Year
+        {
+            get { return PortfolioData.Return3Year; }
+        }
+        public double Return5Year
+        {
+            get { return PortfolioData.Return5Year; }
+        }
+        public double ReturnOverall
+        {
+            get { return PortfolioData.ReturnOverall; }
+        }
+        public CostBasis CostBasis
+        {
+            get { return PortfolioData.CostBasis; }
+        }
+        public DaysGain DaysGain
+        {
+            get { return PortfolioData.DaysGain; }
+        }
+        public Gain Gain
+        {
+            get { return PortfolioData.Gain; }
+        }
+        public MarketValue MarketValue
+        {
+            get { return PortfolioData.MarketValue; }
+        }
+        #endregion 
     }
 }
