@@ -7,7 +7,6 @@ using System.Xml;
 
 namespace Finance
 {
-    // XXX: Move this class into its own file.
     public class Money : SimpleElement
     {
         public Money()
@@ -24,17 +23,6 @@ namespace Finance
             Attributes.Add(FinanceNamespace.AMOUNT, null);
             Attributes.Add(FinanceNamespace.CURRENCYCODE, null);
         }
-
-        
-
-        //public Money(XmlNode node)
-        //    : base(FinanceNamespace.MONEY, FinanceNamespace.PREFIX_GDATA, FinanceNamespace.NAMESPACE_GDATA)
-        //{
-        //    Attributes.Add(FinanceNamespace.AMOUNT, null);
-        //    Attributes.Add(FinanceNamespace.CURRENCYCODE, null);
-        //    Amount = float.Parse(node.Attributes["amount"].Value);
-        //    CurrencyCode = node.Attributes["currencyCode"].Value as string;
-        //}
 
         public float Amount
         {

@@ -8,37 +8,11 @@ using System.Xml;
 
 namespace Finance
 {
-    //XXX: Need to support more then one node of money... for instance,
-    // when a security's default currency differs from the portfolio's
-    // , then a second money element is included.. we need to check for that.
-    public class Commission : SimpleElement
+    public class Commission : MoneyContainer
     {
-
           public Commission()
-            : base("commission", "gf", "http://schemas.google.com/finance/2007")
+            : base(FinanceNamespace.COMMISSION, FinanceNamespace.PREFIX_FINANCE, FinanceNamespace.NAMESPACE_FINANCE)
         {
-            
         }
-
-          public Commission(string initValue)
-             : base("commission", "gf", "http://schemas.google.com/finance/2007", initValue)
-        {
-            
-        }
-
-         public Money Money
-         {
-             get;
-             set;
-         }
-
-         public override IExtensionElementFactory CreateInstance(XmlNode node, AtomFeedParser parser)
-         {
-             //Commission e = base.CreateInstance(node, parser) as Commission;
-             //e.Money = new Money(node["gd:money"]);
-             //return e;
-             return null;
-         }
-
     }
 }
