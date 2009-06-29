@@ -9,7 +9,6 @@ namespace Finance
     /// <summary>
     /// gf:portfolioData schema extension describing the portfolio. Contains an overview of a portfolio, including currency, returns, and performance statistics.
     /// </summary>
-    //public class PortfolioData : SimpleElement
     public class PortfolioData : SimpleContainer // We are using a simple container cause gf:portfolioData can have childern nodes.   
     {
         #region Constructor
@@ -35,8 +34,6 @@ namespace Finance
             Attributes.Add(FinanceNamespace.RETURN5Y, null);
             Attributes.Add(FinanceNamespace.RETURNOVERALL, null);
         }
-
-       
         #endregion 
 
         public DaysGain DaysGain
