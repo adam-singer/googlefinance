@@ -61,7 +61,6 @@
     <Compile Include="PortfolioData.cs" />
     <Compile Include="PortfolioEntry.cs" />
     <Compile Include="PortfolioFeed.cs" />
-    <Compile Include="PortfolioFeedLink.cs" />
     <Compile Include="PortfolioQuery.cs" />
     <Compile Include="PositionData.cs" />
     <Compile Include="PositionEntry.cs" />
