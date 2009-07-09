@@ -1,0 +1,24 @@
+﻿<Window x:Class="StockTicker.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:commands="clr-namespace:StockTicker.Commands"
+    xmlns:viewmodel="clr-namespace:StockViewModel;assembly=StockViewModel"    
+        
+    Title="Stock Ticker" 
+        Height="700" Width="1000"
+        >
+    
+    <Window.CommandBindings>
+        <CommandBinding Command="commands:ActionCommands.LoginCommand" Executed="LoginCommand_Executed" CanExecute="LoginCommand_CanExecute" />
+        <CommandBinding Command="commands:ActionCommands.LogoutCommand" Executed="LogoutCommand_Executed" CanExecute="LogoutCommand_CanExecute" />
+        <CommandBinding Command="commands:ActionCommands.ExitCommand" Executed="ExitCommand_Executed" />
+        
+        <CommandBinding Command="commands:ActionCommands.CreatePortfolio" Executed="CreatePortfolio_Executed" CanExecute="CreatePortfolio_Executed" />
+        <CommandBinding Command="commands:ActionCommands.RenamePortfolio" Executed="RenamePortfolio_Executed" CanExecute="RenamePortfolio_Executed" 
+        <CommandBinding Command="commands:ActionCommands.DeletePortfolio" Executed="DeletePortfolio_Executed" CanExecute="DeletePortfolio_Executed" />
+    </Window.CommandBindings>
+    <Grid>
+        
+    </Grid>
+</Window>

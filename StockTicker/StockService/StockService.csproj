@@ -50,6 +50,12 @@
   <ItemGroup>
     <Content Include="README.TXT" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\GoogleFinanceDemo\Finance\Finance.csproj">
+      <Project>{EE664307-D757-4711-A723-F62EBC5D7AF1}</Project>
+      <Name>Finance</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
