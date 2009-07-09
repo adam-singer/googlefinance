@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockViewModel", "StockView
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCFProxy", "WCFProxy\WCFProxy.csproj", "{12597C2F-DE22-4086-95B6-E46E9F80CCEC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finance", "..\GoogleFinanceDemo\Finance\Finance.csproj", "{EE664307-D757-4711-A723-F62EBC5D7AF1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{12597C2F-DE22-4086-95B6-E46E9F80CCEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12597C2F-DE22-4086-95B6-E46E9F80CCEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12597C2F-DE22-4086-95B6-E46E9F80CCEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE664307-D757-4711-A723-F62EBC5D7AF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE664307-D757-4711-A723-F62EBC5D7AF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE664307-D757-4711-A723-F62EBC5D7AF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE664307-D757-4711-A723-F62EBC5D7AF1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
