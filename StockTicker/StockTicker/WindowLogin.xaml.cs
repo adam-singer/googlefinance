@@ -22,5 +22,11 @@ namespace StockTicker
         {
             InitializeComponent();
         }
+
+
+        private void buttonOK_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

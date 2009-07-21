@@ -14,9 +14,9 @@
         <CommandBinding Command="commands:ActionCommands.LogoutCommand" Executed="LogoutCommand_Executed" CanExecute="LogoutCommand_CanExecute" />
         <CommandBinding Command="commands:ActionCommands.ExitCommand" Executed="ExitCommand_Executed" />
         
-        <CommandBinding Command="commands:ActionCommands.CreatePortfolio" Executed="CreatePortfolio_Executed" CanExecute="CreatePortfolio_Executed" />
-        <CommandBinding Command="commands:ActionCommands.RenamePortfolio" Executed="RenamePortfolio_Executed" CanExecute="RenamePortfolio_Executed" 
-        <CommandBinding Command="commands:ActionCommands.DeletePortfolio" Executed="DeletePortfolio_Executed" CanExecute="DeletePortfolio_Executed" />
+        <CommandBinding Command="commands:ActionCommands.CreatePortfolio" Executed="CreatePortfolio_Executed" CanExecute="CreatePortfolio_CanExecute" />
+        <CommandBinding Command="commands:ActionCommands.RenamePortfolio" Executed="RenamePortfolio_Executed" CanExecute="RenamePortfolio_CanExecute" />
+        <CommandBinding Command="commands:ActionCommands.DeletePortfolio" Executed="DeletePortfolio_Executed" CanExecute="DeletePortfolio_CanExecute" />
     </Window.CommandBindings>
     <Grid>
         

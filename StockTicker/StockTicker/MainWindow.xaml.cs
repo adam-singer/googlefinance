@@ -18,9 +18,69 @@ namespace StockTicker
     /// </summary>
     public partial class MainWindow : Window
     {
+        
         public MainWindow()
         {
             InitializeComponent();
         }
+
+        #region Menu Command Hanlders
+
+        private void LoginCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+           
+        }
+
+        private void LoginCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+        private void LogoutCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+
+        }
+
+        private void LogoutCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+
+       
+        private void ExitCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        private void CreatePortfolio_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+        }
+
+        private void CreatePortfolio_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+        }
+
+
+        private void RenamePortfolio_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+        }
+
+        private void RenamePortfolio_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+        }
+
+
+        private void DeletePortfolio_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+        }
+
+        private void DeletePortfolio_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+        }
+
+
+
+
+        #endregion 
     }
 }
