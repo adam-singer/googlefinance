@@ -5,7 +5,8 @@ using System.Text;
 
 namespace StockViewModel
 {
-    class StockViewModel
+
+    public class StockViewModel
     {
     }
 }
