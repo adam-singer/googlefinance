@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SP500", "SP500\SP500.csproj", "{9C1F9671-845B-442A-8EBD-956B2FBF76AA}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = GoogleFinanceDemo.vsmdi
@@ -28,6 +30,10 @@ Global
 		{9439E875-227E-4822-8ABB-F02036B89AFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9439E875-227E-4822-8ABB-F02036B89AFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9439E875-227E-4822-8ABB-F02036B89AFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C1F9671-845B-442A-8EBD-956B2FBF76AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C1F9671-845B-442A-8EBD-956B2FBF76AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C1F9671-845B-442A-8EBD-956B2FBF76AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C1F9671-845B-442A-8EBD-956B2FBF76AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

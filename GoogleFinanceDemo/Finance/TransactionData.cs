@@ -97,16 +97,20 @@ namespace Finance
             }
         }
 
-        public DateTime Date
+        // TODO: Need to accept the date and time as a string, parse and clean to the proper string google likes.
+        //public DateTime Date
+        public string Date
         {
             get
             {
                 DateTime dt = DateTime.Parse(Attributes[FinanceNamespace.DATE] as string);
-                return dt;
+                return dt.ToString("yyyy-MM-dd") + "T00:00:00.000Z";
             }
             set
             {
-                Attributes[FinanceNamespace.DATE] = value.ToString();
+                // This is a bit hacked up since it doesnt account for time..
+                string dt = DateTime.Parse(value).ToString("yyyy-MM-dd") + "T00:00:00.000Z";
+                Attributes[FinanceNamespace.DATE] = dt;
             }
         }
 
