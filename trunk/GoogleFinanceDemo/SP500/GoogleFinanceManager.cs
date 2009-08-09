@@ -9,9 +9,51 @@ namespace SP500
     /// <summary>
     /// This object is going to do all the work for us. This should be moved into Finance and then have an interface for it.
     /// </summary>
-    public class GoogleFinanceManager
+    public class GoogleFinanceManager : IGoogleFinanceManager
     {
         public FinanceService FinanceService { private set; get; }
+
+        public bool PortfolioDetails { set; get; }
+        public bool PositionDetails { set; get; }
+        public bool TransactionDetails { set; get; }
+
+        /// <summary>
+        /// Enablese the query to provide more details. <see cref="http://code.google.com/apis/finance/reference.html#Parameters"/>
+        /// </summary>
+        /// <returns>string that enables more parameters to contain more details from the queries.</returns>
+        public string Details()
+        {
+            string detailsParameters = "";
+            List<string> d = new List<string>();
+
+            if (PortfolioDetails == true) d.Add(FinanceNamespace.RETURNSDETAIL);
+
+            if (PositionDetails == true) d.Add(FinanceNamespace.POSITIONDETAILS);
+            
+            if (TransactionDetails == true) d.Add(FinanceNamespace.TRANSACTIONSDETAILS);
+            
+            switch (d.Count)
+            {
+                case 0:
+                    detailsParameters = "";
+                    break;
+
+                case 1:
+                    detailsParameters = FinanceNamespace.QUESTIONMARK + d[0];
+                    break;
+
+                case 2:
+                    detailsParameters = FinanceNamespace.QUESTIONMARK + d[0] + FinanceNamespace.AMP + d[1];
+                    break;
+
+                case 3:
+                    detailsParameters = FinanceNamespace.QUESTIONMARK + d[0] + FinanceNamespace.AMP + d[1] + FinanceNamespace.AMP + d[2];
+                    break;
+            }
+
+            return detailsParameters;
+        }
+
         public GoogleFinanceManager(string username, string passsword)
         {
             FinanceService = new FinanceService("GoogleFinanceManager");
@@ -32,7 +74,7 @@ namespace SP500
             get
             {
                 List<string> portfolioNames = new List<string>();
-                PortfolioQuery query = new PortfolioQuery();
+                PortfolioQuery query = new PortfolioQuery(FinanceNamespace.PORTFOLIOS + Details());
                 PortfolioFeed portfolioFeed = FinanceService.Query(query);
                 try
                 {
@@ -56,7 +98,7 @@ namespace SP500
             get
             {
                 Dictionary<string, PortfolioEntry> portfolios = new Dictionary<string, PortfolioEntry>();
-                PortfolioQuery query = new PortfolioQuery();
+                PortfolioQuery query = new PortfolioQuery(FinanceNamespace.PORTFOLIOS + Details());
                 PortfolioFeed portfolioFeed = FinanceService.Query(query);
                 try
                 {
@@ -150,7 +192,7 @@ namespace SP500
         
         public bool DeletePortfolio(string title)
         {
-            PortfolioQuery query = new PortfolioQuery();
+            PortfolioQuery query = new PortfolioQuery(FinanceNamespace.PORTFOLIOS + Details());
             PortfolioFeed portfolioFeed = FinanceService.Query(query);
             try
             {
@@ -174,7 +216,7 @@ namespace SP500
 
         public TransactionEntry AddSymbol(string fullSymbolName, string portfolioTitle)
         {
-            PortfolioQuery query = new PortfolioQuery();
+            PortfolioQuery query = new PortfolioQuery(FinanceNamespace.PORTFOLIOS + Details());
             PortfolioFeed portfolioFeed = FinanceService.Query(query);
             try
             {
@@ -204,7 +246,7 @@ namespace SP500
 
         public TransactionEntry AddSymbol(string exchange, string symbol, PortfolioEntry entry)
         {
-            PositionFeed positionFeed = FinanceService.Query(new PositionQuery(entry.EditUri.Content + FinanceNamespace.POSITIONAPPENDQUERY));
+            PositionFeed positionFeed = FinanceService.Query(new PositionQuery(entry.EditUri.Content + FinanceNamespace.POSITIONAPPENDQUERY + Details()));
 
             TransactionEntry transactionEntry = new TransactionEntry()
             {
@@ -230,7 +272,7 @@ namespace SP500
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception while trying to add symbol={0} to portfolio={0}", symbol + ":" + exchange, entry.Title.Text);
+                Console.WriteLine("Exception while trying to add symbol={0} to portfolio={1}", symbol + ":" + exchange, entry.Title.Text);
                 Console.WriteLine("Exception: {0}", ex.Message);
                 return null;
             }
@@ -238,12 +280,11 @@ namespace SP500
 
         #endregion
 
-        
-
+        #region Retrieve Symbols from portfolio
         // TODO: add the detailed query here also.
         public Dictionary<string, PositionEntry> RetrieveSymbols(PortfolioEntry entry)
         {
-            PositionFeed positionFeed = FinanceService.Query(new PositionQuery(entry.EditUri.Content + FinanceNamespace.POSITIONAPPENDQUERY));
+            PositionFeed positionFeed = FinanceService.Query(new PositionQuery(entry.EditUri.Content + FinanceNamespace.POSITIONAPPENDQUERY + Details()));
             Dictionary<string, PositionEntry> symbols = new Dictionary<string, PositionEntry>();
 
             foreach (PositionEntry positionEntry in positionFeed.Entries)
@@ -257,8 +298,9 @@ namespace SP500
         {
             return RetrieveSymbols(Portfolios[title]);
         }
+        #endregion 
 
-
+        #region Delete Symbol from a portfolio
         public void DeleteSymbol(string symbolRemove, string title)
         {
             DeleteSymbol(symbolRemove, Portfolios[title]);
@@ -266,27 +308,18 @@ namespace SP500
 
         public void DeleteSymbol(string symbolRemove, PortfolioEntry portfolioEntry)
         {
-            //FinanceService.Delete(positionEntry);
-        }
-
-        public void DeleteSymbol(PositionEntry positionEntry, string title)
-        {
-            FinanceService.Delete(positionEntry);
-        }
-
-        public void DeleteSymbol(PositionEntry positionEntry, PortfolioEntry portfolioEntry)
-        {
-            FinanceService.Delete(positionEntry);
+            DeleteSymbol(RetrieveSymbols(portfolioEntry)[symbolRemove]);
         }
 
         public void DeleteSymbol(PositionEntry positionEntry)
         {
-            TransactionFeed transactionFeed = FinanceService.Query(new TransactionQuery(positionEntry.TransactionHerf)); //+ FinanceNamespace.TRANSACTIONSAPPENDQUERY));
+            TransactionFeed transactionFeed = FinanceService.Query(new TransactionQuery(positionEntry.TransactionHerf + Details())); //+ FinanceNamespace.TRANSACTIONSAPPENDQUERY));
 
             foreach (TransactionEntry transactionEntry in transactionFeed.Entries)
             {
                 FinanceService.Delete(new Uri(transactionEntry.EditUri.Content));
             }
         }
+        #endregion 
     }
 }
