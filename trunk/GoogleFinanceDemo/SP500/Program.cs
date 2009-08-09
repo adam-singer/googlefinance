@@ -32,7 +32,7 @@ namespace SP500
 
             Console.Write("Enter google password: ");
             string password = Console.ReadLine();
-            user = "financeCoding@gmail.com"; password = "3989cda9e";
+           
             GoogleFinanceManager googleFinanceManager = new GoogleFinanceManager(user, password);
             
             bool consoleRunning = true;
