@@ -24,7 +24,7 @@ namespace SP500
             // Temporary portfolio entry
             PortfolioEntry portfolioEntry;
             TransactionEntry transactionEntry;
-
+            Dictionary<string, PositionEntry> symbols;
 
 
             Console.Write("Enter google username: ");
@@ -32,7 +32,7 @@ namespace SP500
 
             Console.Write("Enter google password: ");
             string password = Console.ReadLine();
-
+            user = "financeCoding@gmail.com"; password = "3989cda9e";
             GoogleFinanceManager googleFinanceManager = new GoogleFinanceManager(user, password);
             
             bool consoleRunning = true;
@@ -47,8 +47,10 @@ namespace SP500
                 Console.WriteLine("'c' = Create a portfolio");
                 Console.WriteLine("'a' = Add a stock to a portfolio");
                 Console.WriteLine("'r' = Remove a stock from a portfolio");
-                Console.WriteLine("'p' = Portfolio Details");
-                Console.WriteLine("'P' = Stock Details");
+                Console.WriteLine("'p' = Portfolios Details");
+                Console.WriteLine("'P' = Portfolio Stocks Details");
+                Console.WriteLine("'l' = List Portfolios");
+                Console.WriteLine("'s' = List Stocks from a portfolio");
                 Console.WriteLine("'D' = Delete Portfolio");
                 Console.WriteLine("'X' = Exit Program");
                 Console.WriteLine("========================================================");
@@ -252,7 +254,7 @@ namespace SP500
                         portfolioIndex = int.Parse(s);
 
                         string symbolRemove;
-                        Dictionary<string, PositionEntry> symbols = googleFinanceManager.RetrieveSymbols(googleFinanceManager.PortfolioNames[portfolioIndex]);
+                        symbols = googleFinanceManager.RetrieveSymbols(googleFinanceManager.PortfolioNames[portfolioIndex]);
                         foreach (var sym in symbols)
                         {
                             Console.WriteLine("[{0}]", sym.Key);
@@ -268,6 +270,56 @@ namespace SP500
 
                     #region 'p' Portfolio Details
                     case 'p':
+                        googleFinanceManager.PortfolioDetails = true;
+                        googleFinanceManager.PositionDetails = true;
+                        googleFinanceManager.TransactionDetails = true;
+
+                        foreach (var portfolio in googleFinanceManager.Portfolios)
+                        {
+                            Console.WriteLine();
+                            Console.WriteLine("Portfolio Name: {0}", portfolio.Key);
+                            Console.WriteLine("CurrencyCode: {0}", portfolio.Value.CurrencyCode);
+                            Console.WriteLine("GainPercentage: {0}", portfolio.Value.GainPercentage);
+                            Console.WriteLine("Return1Week: {0}", portfolio.Value.Return1Week);
+                            Console.WriteLine("Return4Week: {0}", portfolio.Value.Return4Week);
+                            Console.WriteLine("Return3Month: {0}", portfolio.Value.Return3Month);
+                            Console.WriteLine("ReturnYTD: {0}", portfolio.Value.ReturnYTD);
+                            Console.WriteLine("Return1Year: {0}", portfolio.Value.Return1Year);
+                            Console.WriteLine("Return3Year: {0}", portfolio.Value.Return3Year);
+                            Console.WriteLine("Return5Year: {0}", portfolio.Value.Return5Year);
+                            Console.WriteLine("ReturnOverall: {0}", portfolio.Value.ReturnOverall);
+                            Console.WriteLine("CostBasis: ");
+                            if (portfolio.Value.CostBasis != null)
+                            foreach (var m in portfolio.Value.CostBasis.Money)
+                            {
+                                Console.WriteLine("\tAmount={0:c}", m.Amount);
+                                Console.WriteLine("\tAmount={0}\n", m.CurrencyCode);
+                            }
+                            
+                            Console.WriteLine("DaysGain:");
+                            if (portfolio.Value.DaysGain != null)
+                            foreach (var m in portfolio.Value.DaysGain.Money)
+                            {
+                                Console.WriteLine("\tAmount={0:c}", m.Amount);
+                                Console.WriteLine("\tAmount={0}\n", m.CurrencyCode);
+                            }
+                            Console.WriteLine("Gain:");
+                            if (portfolio.Value.Gain != null)
+                            foreach (var m in portfolio.Value.Gain.Money)
+                            {
+                                Console.WriteLine("\tAmount={0:c}", m.Amount);
+                                Console.WriteLine("\tAmount={0}\n", m.CurrencyCode);
+                            }
+                            Console.WriteLine("MarketValue:");
+                            if (portfolio.Value.MarketValue != null)
+                            foreach (var m in portfolio.Value.MarketValue.Money)
+                            {
+                                Console.WriteLine("\tAmount={0:c}", m.Amount);
+                                Console.WriteLine("\tAmount={0}\n", m.CurrencyCode);
+                            }
+
+                            Console.WriteLine(); Console.WriteLine();
+                        }
 
                         break;
                     #endregion
@@ -275,10 +327,107 @@ namespace SP500
                     #region 'P' Stock Details
                     case 'P':
 
+                        googleFinanceManager.PortfolioDetails = true;
+                        googleFinanceManager.PositionDetails = true;
+                        googleFinanceManager.TransactionDetails = true;
+
+                        portfolioIndex = 0;
+                        foreach (string t in googleFinanceManager.PortfolioNames)
+                        {
+                            Console.WriteLine("[{0}] {1}", portfolioIndex++, t);
+                        }
+
+                        Console.WriteLine("Choose a portfolio to print details of there stocks: [0] ");
+                        s = Console.ReadLine();
+                        s = (s == "" ? "0" : s);
+                        portfolioIndex = int.Parse(s);
+
+                        symbols = googleFinanceManager.RetrieveSymbols(googleFinanceManager.PortfolioNames[portfolioIndex]);
+                        Console.WriteLine("Portfolio Name: {0}", googleFinanceManager.PortfolioNames[portfolioIndex]);
+                        foreach (var sym in symbols)
+                        {
+                            Console.WriteLine();
+
+                            Console.WriteLine("TransactionHerf: {0}", sym.Value.TransactionHerf);
+                            Console.WriteLine("Symbol.FullName: {0}", sym.Value.Symbol.FullName);
+                            Console.WriteLine("Symbol.Exchange: {0}", sym.Value.Symbol.Exchange);
+                            Console.WriteLine("Symbol.StockSymbol: {0}", sym.Value.Symbol.StockSymbol);
+
+                            Console.WriteLine("DaysGain:");
+                            if (sym.Value.DaysGain != null)
+                            foreach (var m in sym.Value.DaysGain.Money)
+                            {
+                                Console.WriteLine("\tAmount={0:c}", m.Amount);
+                                Console.WriteLine("\tAmount={0}\n", m.CurrencyCode);
+                            }
+
+                            Console.WriteLine("CostBasis: ");
+                            if (sym.Value.CostBasis != null)
+                            foreach (var m in sym.Value.CostBasis.Money)
+                            {
+                                Console.WriteLine("\tAmount={0:c}", m.Amount);
+                                Console.WriteLine("\tAmount={0}\n", m.CurrencyCode);
+                            }
+                            
+                            Console.WriteLine("Gain:");
+                            if (sym.Value.Gain != null)
+                            foreach (var m in sym.Value.Gain.Money)
+                            {
+                                Console.WriteLine("\tAmount={0:c}", m.Amount);
+                                Console.WriteLine("\tAmount={0}\n", m.CurrencyCode);
+                            }
+
+                            Console.WriteLine("MarketValue:");
+                            if (sym.Value.MarketValue != null)
+                            foreach (var m in sym.Value.MarketValue.Money)
+                            {
+                                Console.WriteLine("\tAmount={0:c}", m.Amount);
+                                Console.WriteLine("\tAmount={0}\n", m.CurrencyCode);
+                            }
+
+                            Console.WriteLine("GainPercentage: {0}", sym.Value.GainPercentage);
+                            Console.WriteLine("Return1Week: {0}", sym.Value.Return1Week);
+                            Console.WriteLine("Return4Week: {0}", sym.Value.Return4Week);
+                            Console.WriteLine("Return3Month: {0}", sym.Value.Return3Month);
+                            Console.WriteLine("ReturnYTD: {0}", sym.Value.ReturnYTD);
+                            Console.WriteLine("Return1Year: {0}", sym.Value.Return1Year);
+                            Console.WriteLine("Return3Year: {0}", sym.Value.Return3Year);
+                            Console.WriteLine("Return5Year: {0}", sym.Value.Return5Year);
+                            Console.WriteLine("ReturnOverall: {0}", sym.Value.ReturnOverall);
+                            Console.WriteLine("Shares: {0}", sym.Value.Shares);
+                           
+                            Console.WriteLine(); 
+                        }
                         break;
                     #endregion
 
-                    #region
+                    #region 'l' List Portfolios
+                    case 'l':
+                        Console.WriteLine("Printing Portfolios");
+                        googleFinanceManager.PortfolioNames.ForEach(n => Console.WriteLine("Name: {0}", n));
+                        break;
+                    #endregion
+
+                    #region 's' List Stocks from a portfolio
+                    case 's':
+                        // Print out a list of portfolios to choose from
+                        portfolioIndex = 0;
+                        foreach (string t in googleFinanceManager.PortfolioNames)
+                        {
+                            Console.WriteLine("[{0}] {1}", portfolioIndex++, t);
+                        }
+
+                        // ask user to input which they would like to select.
+                        Console.WriteLine("Choose a portfolio to add a symbol too: [0] ");
+                        s = Console.ReadLine();
+                        s = (s == "" ? "0" : s);
+                        portfolioIndex = int.Parse(s);
+
+                        PortfolioEntry entry = googleFinanceManager.Portfolios[googleFinanceManager.PortfolioNames[portfolioIndex]];
+                        var stockKeys = googleFinanceManager.RetrieveSymbols(entry).Keys;
+                        foreach (var v in stockKeys) Console.WriteLine("Ticker Symbol: {0}",v);
+                        
+                        break;
                     #endregion
 
                     #region 'X' Exit Program

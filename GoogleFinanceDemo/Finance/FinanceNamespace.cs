@@ -62,7 +62,7 @@ namespace Finance
         public const string TRANSACTIONSAPPENDQUERY = "/" + TRANSACTIONS;
 
         public const string AMP = "&";
-
+        public const string QUESTIONMARK = "?";
         // NOTE: double check all these values and there returns!
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace Finance
         /// http://finance.google.com/finance/feeds/default/portfolios/1/positions?returns=true&transactions=true&positions=true
         /// </example>
         /// </summary>
-        public const string TRANSACTIONSDETAIL = "transactions=true";
+        public const string TRANSACTIONSDETAILS = "transactions=true";
        
 
     }
