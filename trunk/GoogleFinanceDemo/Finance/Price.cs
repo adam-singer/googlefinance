@@ -8,7 +8,7 @@ using System.Xml;
 
 namespace Finance
 {
-    public class Price : SimpleElement
+    public class Price : MoneyContainer
     {
          public Price()
             : base(FinanceNamespace.PRICE, FinanceNamespace.PREFIX_FINANCE, FinanceNamespace.NAMESPACE_FINANCE)

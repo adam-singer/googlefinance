@@ -54,6 +54,45 @@ namespace Finance
         public const string MONEY = "money";
         public const string AMOUNT = "amount";
         public const string FEEDLINK = "feedLink";
+
+        // Uri construction strings.
+        public const string POSITIONS = "positions";
+        public const string POSITIONAPPENDQUERY = "/" + POSITIONS;
+        public const string TRANSACTIONS = "transactions";
+        public const string TRANSACTIONSAPPENDQUERY = "/" + TRANSACTIONS;
+
+        public const string AMP = "&";
+
+        // NOTE: double check all these values and there returns!
+
+        /// <summary>
+        /// Specify returns=true to request that information about total financial returns 
+        /// and performance statistics be included in the feed entries.
+        /// <remarks>Supported only in portfolio and position feeds.</remarks>
+        /// <example>http://finance.google.com/finance/feeds/default/portfolios/1/positions?returns=true&transactions=true
+        ///</example>
+        /// </summary>
+        public const string RETURNSDETAIL = "returns=true";
+        /// <summary>
+        /// Specify positions=true to request that the position feed for each portfolio 
+        /// entry be embedded as an inline feed, contained in the feed link element.
+        /// <remarks>Supported only in portfolio feeds. If the returns parameter is also set, 
+        /// returns data is included in the inlined feed as well.</remarks>
+        /// <example>
+        /// http://finance.google.com/finance/feeds/default/portfolios/1/positions?returns=true&transactions=true&positions=true
+        /// </example>
+        /// </summary>
+        public const string POSITIONDETAILS = "positions=true";
+        
+        /// <summary>
+        /// Specify transactions=true to request that the transaction feed for each position 
+        /// entry be embedded as an inline feed, contained in the feed link element.
+        /// <remarks>Supported only in position feeds.</remarks>
+        /// <example>
+        /// http://finance.google.com/finance/feeds/default/portfolios/1/positions?returns=true&transactions=true&positions=true
+        /// </example>
+        /// </summary>
+        public const string TRANSACTIONSDETAIL = "transactions=true";
        
 
     }

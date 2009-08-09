@@ -50,7 +50,7 @@ namespace Finance
         {
             get { return TransactionData.Type; }
         }
-        public DateTime Date 
+        public string Date 
         {
             get { return TransactionData.Date; }
         }
