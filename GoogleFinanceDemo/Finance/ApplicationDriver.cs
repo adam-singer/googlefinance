@@ -6,6 +6,8 @@ using Google.GData.Client;
 
 namespace Finance
 {
+    //NOTE: this class is dead and will be removed soon.
+    [Obsolete("You shouldn't use this method anymore. It is dead and incorrect working code. Will be removed soon.")]
     public class ApplicationDriver
     {
         /// <summary>

@@ -8,6 +8,10 @@ namespace Finance
 {
     public class FinanceNamespace
     {
+        // TODO: add a currency code enum.
+
+
+
         public const string PREFIX_FINANCE = "gf";
         public const string NAMESPACE_FINANCE = "http://schemas.google.com/finance/2007";
 

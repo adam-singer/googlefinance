@@ -61,7 +61,7 @@ namespace SP500
 
 #if DEBUG
             // Debugging requests and inserts.
-            GDataLoggingRequestFactory factoryLogging = new GDataLoggingRequestFactory("finance", ApplicationDriver.Name);
+            GDataLoggingRequestFactory factoryLogging = new GDataLoggingRequestFactory("finance", ".NETSDK Finance");
             factoryLogging.MethodOverride = true;
             factoryLogging.CombinedLogFileName = @"c:\xmllog.log";
             FinanceService.RequestFactory = factoryLogging;
@@ -214,6 +214,10 @@ namespace SP500
             return false;
         }
 
+        #endregion
+
+        #region Adding Symbols and Transactions to a Portfolio
+
         public TransactionEntry AddSymbol(string fullSymbolName, string portfolioTitle)
         {
             PortfolioQuery query = new PortfolioQuery(FinanceNamespace.PORTFOLIOS + Details());
@@ -231,7 +235,6 @@ namespace SP500
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                //throw ex;
             }
 
             return null;
@@ -278,7 +281,78 @@ namespace SP500
             }
         }
 
-        #endregion
+        public TransactionEntry AddSymbol(string fullSymbolName, TransactionDataArgs args, string title)
+        {
+            if (!fullSymbolName.Contains(":")) return null;
+
+            // TODO: handle exception correctly with the portfolio title
+            return AddSymbol(fullSymbolName.Split(':')[0], fullSymbolName.Split(':')[1], args, Portfolios[title]);
+        }
+
+        public TransactionEntry AddSymbol(string exchange, string symbol, TransactionDataArgs args, string title)
+        {
+            // TODO: handle the exception correctly with the portfolio title
+            return AddSymbol(exchange, symbol, args, Portfolios[title]);
+        }
+
+        public TransactionEntry AddSymbol(string fullSymbolName, TransactionDataArgs args, PortfolioEntry entry)
+        {
+            if (!fullSymbolName.Contains(":")) return null;
+
+            return AddSymbol(fullSymbolName.Split(':')[0], fullSymbolName.Split(':')[1], args, entry);
+        }
+
+        public TransactionEntry AddSymbol(string exchange, string symbol, TransactionDataArgs args, PortfolioEntry entry)
+        {
+            PositionFeed positionFeed = FinanceService.Query(new PositionQuery(entry.EditUri.Content + FinanceNamespace.POSITIONAPPENDQUERY + Details()));
+
+            TransactionEntry transactionEntry = new TransactionEntry()
+            {
+                TransactionData = new TransactionData()
+                {
+                    Type = args.TransactionType,
+                    Date = args.Date.ToString(),
+                    Shares = args.Shares,
+                    Notes = args.Notes,
+                    Commission = new Commission(),
+                    Price = new Price()
+                }
+            };
+
+            PositionEntry positionEntry = new PositionEntry()
+            {
+                Symbol = new Symbol()
+                {
+                    StockSymbol = symbol,
+                    Exchange = exchange
+                }
+            };
+
+            transactionEntry.TransactionData.Commission.Money.Add(new Money() { Amount = args.Commission, CurrencyCode= args.CurrencyCode });
+            transactionEntry.TransactionData.Price.Money.Add(new Money() { Amount = args.Price, CurrencyCode= args.CurrencyCode });
+
+            Uri uri = new Uri(positionFeed.Feed + "/" + positionEntry.Symbol.Exchange + ":" + positionEntry.Symbol.StockSymbol + "/" + FinanceNamespace.TRANSACTIONS);
+
+            try
+            {
+                return FinanceService.Insert(uri, transactionEntry);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception while trying to add symbol={0} to portfolio={1} and transaction: ", positionEntry.Symbol.Exchange + ":" + positionEntry.Symbol.StockSymbol, entry.Title.Text);
+                Console.WriteLine("Type={0}, Date={1}, Shares={2}, Notes={3}, Commission={4}, Price={5}", 
+                    transactionEntry.TransactionData.Type,
+                    transactionEntry.TransactionData.Date,
+                    transactionEntry.TransactionData.Shares,
+                    transactionEntry.TransactionData.Notes,
+                    transactionEntry.TransactionData.Commission,
+                    transactionEntry.TransactionData.Price);
+                Console.WriteLine("Exception: {0}", ex.Message);
+                return null;
+            }
+        }
+
+        #endregion 
 
         #region Retrieve Symbols from portfolio
         // TODO: add the detailed query here also.

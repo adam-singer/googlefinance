@@ -11,7 +11,7 @@ namespace Finance
     {
         BUY,
         SELL,
-        BUYTOCONVERT,
+        BUYTOCOVER,
         SELLSHORT
     }
 

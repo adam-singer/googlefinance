@@ -50,6 +50,7 @@ namespace Finance
             }
         }
 
+        // TODO: have a better statement hat does not case about case.
         public TransactionTypes Type
         {
             get
@@ -62,7 +63,7 @@ namespace Finance
                 }
                 else if (t == "Buy to Cover")
                 {
-                    return TransactionTypes.BUYTOCONVERT;
+                    return TransactionTypes.BUYTOCOVER;
                 }
                 else if (t == "Buy")
                 {
@@ -82,7 +83,7 @@ namespace Finance
                 {
                     Attributes[FinanceNamespace.TYPE] = "Buy";
                 }
-                else if (value == TransactionTypes.BUYTOCONVERT)
+                else if (value == TransactionTypes.BUYTOCOVER)
                 {
                     Attributes[FinanceNamespace.TYPE] = "Buy to Cover";
                 }

@@ -66,12 +66,12 @@
     <Compile Include="PositionData.cs" />
     <Compile Include="PositionEntry.cs" />
     <Compile Include="PositionFeed.cs" />
-    <Compile Include="PositionFeedLink.cs" />
     <Compile Include="PositionQuery.cs" />
     <Compile Include="Price.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Symbol.cs" />
     <Compile Include="TransactionData.cs" />
+    <Compile Include="TransactionDataArgs.cs" />
     <Compile Include="TransactionEntry.cs" />
     <Compile Include="TransactionFeed.cs" />
     <Compile Include="TransactionQuery.cs" />
