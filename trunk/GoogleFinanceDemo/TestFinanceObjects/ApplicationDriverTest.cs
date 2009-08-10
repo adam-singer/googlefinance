@@ -311,7 +311,7 @@ namespace TestFinanceObjects
         [TestMethod()]
         public void TestPositionEntry2()
         {
-            PositionEntry pe;
+            //PositionEntry pe;
             PositionFeed pf;
             FinanceService service = new FinanceService("test");
             service.setUserCredentials(user, password);

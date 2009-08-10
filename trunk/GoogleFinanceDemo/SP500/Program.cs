@@ -25,6 +25,7 @@ namespace SP500
             PortfolioEntry portfolioEntry;
             TransactionEntry transactionEntry;
             Dictionary<string, PositionEntry> symbols;
+            string fullSymbolName;
 
 
             Console.Write("Enter google username: ");
@@ -215,23 +216,108 @@ namespace SP500
                         s = Console.ReadLine();
                         if ((s == "" ? "n" : s) == "y")
                         {
+                            TransactionDataArgs transactionDataArgs = new TransactionDataArgs()
+                            {
+                                TransactionType = TransactionTypes.BUY,
+                                Price = 0.0f,
+                                Commission = 0.0f,
+                                Notes = "blahblah",
+                                Date = DateTime.Now,
+                                Shares = 100.00
+                            };
+
+
                             // Create transaction
                             Console.WriteLine("Enter the full symbol name exchange:symbol: [NASDAQ:GOOG] ");
                             // TODO: need to implement the buying and selling of stock, not just adding it to a portfolio.
-                            Console.WriteLine("NOT YET IMPLEMENTED");
+                            fullSymbolName = Console.ReadLine();
+
+                            Console.WriteLine("Enter the type of transaction [0] Buy, [2] Buy to Cover, [3] Sell, [4] Sell Short: [0]");
+                            s = Console.ReadLine();
+                            s = (s == "" ? "0" : s);
+                            switch (int.Parse(s))
+                            {
+                                case 0:
+                                    transactionDataArgs.TransactionType = TransactionTypes.BUY;
+                                    break;
+
+                                case 1:
+                                    transactionDataArgs.TransactionType = TransactionTypes.BUYTOCOVER;
+                                    break;
+
+                                case 2:
+                                    transactionDataArgs.TransactionType = TransactionTypes.SELL;
+                                    break;
+
+                                case 3:
+                                    transactionDataArgs.TransactionType = TransactionTypes.SELLSHORT;
+                                    break;
+                            }
+
+
+                            Console.WriteLine("Enter the price to purchase the stock: [10.95]");
+                            s = Console.ReadLine();
+                            s = (s == "" ? "10.95" : s);
+                            transactionDataArgs.Price = float.Parse(s);
+
+                            Console.WriteLine("Enter the price of commission: [10.95]");
+                            s = Console.ReadLine();
+                            s = (s == "" ? "10.95" : s);
+                            transactionDataArgs.Commission = float.Parse(s);
+
+                            Console.WriteLine("Enter some notes about this purchase: [Going to make money on this stock]");
+                            s = Console.ReadLine();
+                            s = (s == "" ? "Going to make money on this stock" : s);
+
+                            Console.WriteLine("What date did you purchase this stock: [Today]");
+                            s = Console.ReadLine();
+                            try
+                            {
+                                transactionDataArgs.Date = DateTime.Parse(s);
+                            }
+                            catch (Exception)
+                            {
+                                transactionDataArgs.Date = DateTime.Now;
+                            }
+
+                            Console.WriteLine("How many shares do you want to purchase: [100] ");
+                            s = Console.ReadLine();
+                            s = (s == "" ? "100" : s);
+                            transactionDataArgs.Shares = double.Parse(s);
+
+                            Console.WriteLine("Enter Currency Code: [USD] ");
+                            s = Console.ReadLine();
+                            s = (s == "" ? "USD" : s);
+                            transactionDataArgs.CurrencyCode = s;
+
+
+                            transactionEntry = googleFinanceManager.AddSymbol(fullSymbolName, transactionDataArgs, googleFinanceManager.Portfolios[googleFinanceManager.PortfolioNames[portfolioIndex]]);
+                            if (transactionEntry != null)
+                            {
+
+                                Console.WriteLine("Symbol={0} has successfully been added to Portfolio={1}", fullSymbolName, transactionEntry.Title.Text);
+                                Console.WriteLine("Type={0}, Date={1}, Shares={2}, Notes={3}, Commission={4}, Price={5}",
+                                   transactionDataArgs.TransactionType,
+                                   transactionDataArgs.Date,
+                                   transactionDataArgs.Shares,
+                                   transactionDataArgs.Notes,
+                                   transactionDataArgs.Commission,
+                                   transactionDataArgs.Price);
+                            }
                         }
                         else
                         {
                             // add symbol to that list.
                             Console.WriteLine("Enter the full symbol name exchange:symbol: [NASDAQ:GOOG] ");
                             s = Console.ReadLine();
-                            string fullSymbolName = s;
+                            fullSymbolName = s;
 
                             transactionEntry = googleFinanceManager.AddSymbol(fullSymbolName, googleFinanceManager.PortfolioNames[portfolioIndex]);
 
                             if (transactionEntry != null)
                             {
                                 Console.WriteLine("Symbol={0} has successfully been added to Portfolio={1}", fullSymbolName, transactionEntry.Title.Text);
+
                             }
  
                         }
@@ -434,12 +520,8 @@ namespace SP500
                     case 'X':
                         Console.WriteLine("Exiting SP500 Program");
                         return;
-                        break;
                     #endregion 
                 }
-
-              
-
             }
         }
     }
