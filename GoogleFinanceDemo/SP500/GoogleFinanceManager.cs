@@ -63,7 +63,7 @@ namespace SP500
             // Debugging requests and inserts.
             GDataLoggingRequestFactory factoryLogging = new GDataLoggingRequestFactory("finance", ".NETSDK Finance");
             factoryLogging.MethodOverride = true;
-            factoryLogging.CombinedLogFileName = @"c:\xmllog.log";
+            factoryLogging.CombinedLogFileName = @"xmllog.log";
             FinanceService.RequestFactory = factoryLogging;
 #endif 
         }
@@ -366,6 +366,25 @@ namespace SP500
                 symbols.Add(positionEntry.Symbol.Exchange + ":" + positionEntry.Symbol.StockSymbol, positionEntry);
             }
             return symbols;
+        }
+
+        //public List<TransactionEntry> RetrieveSymbolTransactions(string symbol)
+        //{
+        //    return null;
+        //}
+
+        public List<TransactionEntry> RetrieveSymbolTransaction(PositionEntry entry)
+        {
+            TransactionFeed transactionFeed = FinanceService.Query(new TransactionQuery(entry.TransactionHerf + Details()));
+
+            List<TransactionEntry> transactionEntries = new List<TransactionEntry>();
+
+            //transactionFeed.Entries.ToList<AtomEntryCollection>().ForEach(t => transactionEntries.Add(t));
+            foreach (TransactionEntry te in transactionFeed.Entries)
+            {
+                transactionEntries.Add(te);
+            }
+            return transactionEntries;
         }
 
         public Dictionary<string, PositionEntry> RetrieveSymbols(string title)
