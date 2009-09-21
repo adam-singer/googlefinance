@@ -79,12 +79,12 @@ namespace TestFinanceObjects
         public void ApplicationDriverConstructorTest()
         {
             
-            ApplicationDriver target = new ApplicationDriver(user, password);
+            //ApplicationDriver target = new ApplicationDriver(user, password);
 
 
 
-            Console.WriteLine(target.Portfolios.Count);
-            Console.WriteLine(target.Portfolios.ToString());
+            //Console.WriteLine(target.Portfolios.Count);
+            //Console.WriteLine(target.Portfolios.ToString());
             
         }
 
@@ -95,80 +95,80 @@ namespace TestFinanceObjects
         public void PortfoliosTest()
         {
             
-            ApplicationDriver target = new ApplicationDriver(user, password);
+            //ApplicationDriver target = new ApplicationDriver(user, password);
 
-            List<string> actual;
-            actual = target.Portfolios;
-            foreach (string a in actual)
-            {
-                Console.WriteLine(a);
-            }
+            //List<string> actual;
+            //actual = target.Portfolios;
+            //foreach (string a in actual)
+            //{
+            //    Console.WriteLine(a);
+            //}
             
         }
 
         [TestMethod()]
         public void CurrentPortfolioTransactionsTest()
         {
-            ApplicationDriver target = new ApplicationDriver(user, password);
+            //ApplicationDriver target = new ApplicationDriver(user, password);
 
-            string curPort = target.CurrentPortfolioName;
-            target.CurrentPortfolioName = "My Portfolio";
-            Console.WriteLine(curPort);
+            //string curPort = target.CurrentPortfolioName;
+            //target.CurrentPortfolioName = "My Portfolio";
+            //Console.WriteLine(curPort);
 
-            List<PositionEntry> positions;
-            positions = target.CurrentPositions;
-            foreach (PositionEntry a in positions)
-            {
-                Console.WriteLine("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
-                Console.WriteLine(a);
-                Console.WriteLine("Title = " + a.Title.Text);
-                Console.WriteLine("GainPercentage = " + a.GainPercentage);
-                Console.WriteLine("Return1Week = " + a.Return1Week);
-                Console.WriteLine("Return1Year = " + a.Return1Year);
-                Console.WriteLine("Return3Month = " + a.Return3Month);
-                Console.WriteLine("Return3Year = " + a.Return3Year);
-                Console.WriteLine("Return4Week = " + a.Return4Week);
-                Console.WriteLine("Return5Year = " + a.Return5Year);
-                Console.WriteLine("ReturnOverall = " + a.ReturnOverall);
-                Console.WriteLine("Shares = " + a.Shares);
-                Console.WriteLine("ReturnYTD = " + a.ReturnYTD);
+            //List<PositionEntry> positions;
+            //positions = target.CurrentPositions;
+            //foreach (PositionEntry a in positions)
+            //{
+            //    Console.WriteLine("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
+            //    Console.WriteLine(a);
+            //    Console.WriteLine("Title = " + a.Title.Text);
+            //    Console.WriteLine("GainPercentage = " + a.GainPercentage);
+            //    Console.WriteLine("Return1Week = " + a.Return1Week);
+            //    Console.WriteLine("Return1Year = " + a.Return1Year);
+            //    Console.WriteLine("Return3Month = " + a.Return3Month);
+            //    Console.WriteLine("Return3Year = " + a.Return3Year);
+            //    Console.WriteLine("Return4Week = " + a.Return4Week);
+            //    Console.WriteLine("Return5Year = " + a.Return5Year);
+            //    Console.WriteLine("ReturnOverall = " + a.ReturnOverall);
+            //    Console.WriteLine("Shares = " + a.Shares);
+            //    Console.WriteLine("ReturnYTD = " + a.ReturnYTD);
 
-                //// XXX: Need to put for loops around the money objects cause there could be more then one.
-                //Console.WriteLine("DaysGain Money = " + a.DaysGain.Money.Amount);
-                //Console.WriteLine("DaysGain Currency Code = " + a.DaysGain.Money.CurrencyCode);
+            //    //// XXX: Need to put for loops around the money objects cause there could be more then one.
+            //    //Console.WriteLine("DaysGain Money = " + a.DaysGain.Money.Amount);
+            //    //Console.WriteLine("DaysGain Currency Code = " + a.DaysGain.Money.CurrencyCode);
 
-                //Console.WriteLine("CostBasis Money = " + a.CostBasis.Money.Amount);
-                //Console.WriteLine("CostBasis Currency Code = " + a.CostBasis.Money.CurrencyCode);
+            //    //Console.WriteLine("CostBasis Money = " + a.CostBasis.Money.Amount);
+            //    //Console.WriteLine("CostBasis Currency Code = " + a.CostBasis.Money.CurrencyCode);
 
-                //Console.WriteLine("Gain Money = " + a.Gain.Money.Amount);
-                //Console.WriteLine("Gain Currency Code = " + a.Gain.Money.CurrencyCode);
+            //    //Console.WriteLine("Gain Money = " + a.Gain.Money.Amount);
+            //    //Console.WriteLine("Gain Currency Code = " + a.Gain.Money.CurrencyCode);
 
-                //Console.WriteLine("MarketValue Money = " + a.MarketValue.Money.Amount);
-                //Console.WriteLine("MarketValue Currency Code = " + a.MarketValue.Money.CurrencyCode);
+            //    //Console.WriteLine("MarketValue Money = " + a.MarketValue.Money.Amount);
+            //    //Console.WriteLine("MarketValue Currency Code = " + a.MarketValue.Money.CurrencyCode);
 
 
-                Console.WriteLine("Symbol StockSymbol = " + a.Symbol.StockSymbol);
-                Console.WriteLine("Symbol Exchange = " + a.Symbol.Exchange);
-                Console.WriteLine("Symbol FullName = " + a.Symbol.FullName);
+            //    Console.WriteLine("Symbol StockSymbol = " + a.Symbol.StockSymbol);
+            //    Console.WriteLine("Symbol Exchange = " + a.Symbol.Exchange);
+            //    Console.WriteLine("Symbol FullName = " + a.Symbol.FullName);
 
-                Console.WriteLine("FeedLink feedlink = " + a.FeedLink.Href);
+            //    Console.WriteLine("FeedLink feedlink = " + a.FeedLink.Href);
 
-                //Console.WriteLine("CurrencyCode = " + a.CurrencyCode);
-                Console.WriteLine("============================TRANSACTIONS============================");
+            //    //Console.WriteLine("CurrencyCode = " + a.CurrencyCode);
+            //    Console.WriteLine("============================TRANSACTIONS============================");
 
-                Console.WriteLine("Transactions");
+            //    Console.WriteLine("Transactions");
 
-                //foreach (TransactionEntry te in a.Transactions)
-                //{
-                //    Console.WriteLine("Id = " + te.Id.AbsoluteUri);
-                //}
+            //    //foreach (TransactionEntry te in a.Transactions)
+            //    //{
+            //    //    Console.WriteLine("Id = " + te.Id.AbsoluteUri);
+            //    //}
 
                 
 
-                Console.WriteLine("==========================END TRANSACTIONS==========================");
+            //    Console.WriteLine("==========================END TRANSACTIONS==========================");
 
-                Console.WriteLine("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
-            }
+            //    Console.WriteLine("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
+            //}
         }
 
 
@@ -179,52 +179,52 @@ namespace TestFinanceObjects
         public void CurrentPositionsTest()
         {
            
-            ApplicationDriver target = new ApplicationDriver(user, password);
+            //ApplicationDriver target = new ApplicationDriver(user, password);
 
-            List<PositionEntry> actual;
-            string curPort = target.CurrentPortfolioName;
-            target.CurrentPortfolioName = "My Portfolio";
-            Console.WriteLine(curPort);
-            actual = target.CurrentPositions;
-            foreach (PositionEntry a in actual)
-            {
-                Console.WriteLine("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
-                Console.WriteLine(a);
-                Console.WriteLine("Title = " + a.Title.Text);
-                Console.WriteLine("GainPercentage = " + a.GainPercentage);
-                Console.WriteLine("Return1Week = " + a.Return1Week);
-                Console.WriteLine("Return1Year = " + a.Return1Year);
-                Console.WriteLine("Return3Month = " + a.Return3Month);
-                Console.WriteLine("Return3Year = " + a.Return3Year);
-                Console.WriteLine("Return4Week = " + a.Return4Week);
-                Console.WriteLine("Return5Year = " + a.Return5Year);
-                Console.WriteLine("ReturnOverall = " + a.ReturnOverall);
-                Console.WriteLine("Shares = " + a.Shares);
-                Console.WriteLine("ReturnYTD = " + a.ReturnYTD);
+            //List<PositionEntry> actual;
+            //string curPort = target.CurrentPortfolioName;
+            //target.CurrentPortfolioName = "My Portfolio";
+            //Console.WriteLine(curPort);
+            //actual = target.CurrentPositions;
+            //foreach (PositionEntry a in actual)
+            //{
+            //    Console.WriteLine("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
+            //    Console.WriteLine(a);
+            //    Console.WriteLine("Title = " + a.Title.Text);
+            //    Console.WriteLine("GainPercentage = " + a.GainPercentage);
+            //    Console.WriteLine("Return1Week = " + a.Return1Week);
+            //    Console.WriteLine("Return1Year = " + a.Return1Year);
+            //    Console.WriteLine("Return3Month = " + a.Return3Month);
+            //    Console.WriteLine("Return3Year = " + a.Return3Year);
+            //    Console.WriteLine("Return4Week = " + a.Return4Week);
+            //    Console.WriteLine("Return5Year = " + a.Return5Year);
+            //    Console.WriteLine("ReturnOverall = " + a.ReturnOverall);
+            //    Console.WriteLine("Shares = " + a.Shares);
+            //    Console.WriteLine("ReturnYTD = " + a.ReturnYTD);
                
-                // XXX: Need to put for loops around the money objects cause there could be more then one.
-                //Console.WriteLine("DaysGain Money = " + a.DaysGain.Money.Amount);
-                //Console.WriteLine("DaysGain Currency Code = " + a.DaysGain.Money.CurrencyCode);
+            //    // XXX: Need to put for loops around the money objects cause there could be more then one.
+            //    //Console.WriteLine("DaysGain Money = " + a.DaysGain.Money.Amount);
+            //    //Console.WriteLine("DaysGain Currency Code = " + a.DaysGain.Money.CurrencyCode);
 
-                //Console.WriteLine("CostBasis Money = " + a.CostBasis.Money.Amount);
-                //Console.WriteLine("CostBasis Currency Code = " + a.CostBasis.Money.CurrencyCode);
+            //    //Console.WriteLine("CostBasis Money = " + a.CostBasis.Money.Amount);
+            //    //Console.WriteLine("CostBasis Currency Code = " + a.CostBasis.Money.CurrencyCode);
 
-                //Console.WriteLine("Gain Money = " + a.Gain.Money.Amount);
-                //Console.WriteLine("Gain Currency Code = " + a.Gain.Money.CurrencyCode);
+            //    //Console.WriteLine("Gain Money = " + a.Gain.Money.Amount);
+            //    //Console.WriteLine("Gain Currency Code = " + a.Gain.Money.CurrencyCode);
 
-                //Console.WriteLine("MarketValue Money = " + a.MarketValue.Money.Amount);
-                //Console.WriteLine("MarketValue Currency Code = " + a.MarketValue.Money.CurrencyCode);
+            //    //Console.WriteLine("MarketValue Money = " + a.MarketValue.Money.Amount);
+            //    //Console.WriteLine("MarketValue Currency Code = " + a.MarketValue.Money.CurrencyCode);
 
 
-                Console.WriteLine("Symbol StockSymbol = " + a.Symbol.StockSymbol);
-                Console.WriteLine("Symbol Exchange = " + a.Symbol.Exchange);
-                Console.WriteLine("Symbol FullName = " + a.Symbol.FullName);
+            //    Console.WriteLine("Symbol StockSymbol = " + a.Symbol.StockSymbol);
+            //    Console.WriteLine("Symbol Exchange = " + a.Symbol.Exchange);
+            //    Console.WriteLine("Symbol FullName = " + a.Symbol.FullName);
 
-                Console.WriteLine("FeedLink feedlink = " + a.FeedLink.Href);
+            //    Console.WriteLine("FeedLink feedlink = " + a.FeedLink.Href);
 
-                //Console.WriteLine("CurrencyCode = " + a.CurrencyCode);
-                Console.WriteLine("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
-            }
+            //    //Console.WriteLine("CurrencyCode = " + a.CurrencyCode);
+            //    Console.WriteLine("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+");
+            //}
             
         }
 
@@ -234,20 +234,20 @@ namespace TestFinanceObjects
         [TestMethod()]
         public void CurrentPortfolioTest()
         {
-            ApplicationDriver target = new ApplicationDriver(user, password);
-            target.CurrentPortfolioName = "My Portfolio";
-            PortfolioEntry pe = target.CurrentPortfolioEntry;
-            Console.WriteLine(pe.Title.Text);
-            //Console.WriteLine(pe.CurrencyCode);
-            //Console.WriteLine(pe.GainPercentage);
-            //Console.WriteLine(pe.Return3Month);
-            //Console.WriteLine(pe.ReturnYTD);
-            //Console.WriteLine(pe.Return1Year);
-            //Console.WriteLine(pe.Return3Year);
-            //Console.WriteLine(pe.Return5Year);
-            //Console.WriteLine(pe.ReturnOverall);
-            //Console.WriteLine(pe.Return4Week);
-            //Console.WriteLine(pe.Return1Week);
+            //ApplicationDriver target = new ApplicationDriver(user, password);
+            //target.CurrentPortfolioName = "My Portfolio";
+            //PortfolioEntry pe = target.CurrentPortfolioEntry;
+            //Console.WriteLine(pe.Title.Text);
+            ////Console.WriteLine(pe.CurrencyCode);
+            ////Console.WriteLine(pe.GainPercentage);
+            ////Console.WriteLine(pe.Return3Month);
+            ////Console.WriteLine(pe.ReturnYTD);
+            ////Console.WriteLine(pe.Return1Year);
+            ////Console.WriteLine(pe.Return3Year);
+            ////Console.WriteLine(pe.Return5Year);
+            ////Console.WriteLine(pe.ReturnOverall);
+            ////Console.WriteLine(pe.Return4Week);
+            ////Console.WriteLine(pe.Return1Week);
         }
 
         /// <summary>
@@ -256,14 +256,14 @@ namespace TestFinanceObjects
         [TestMethod()]
         public void CreatePortfolioTest()
         {
-            ApplicationDriver target = new ApplicationDriver(user, password);
+            //ApplicationDriver target = new ApplicationDriver(user, password);
 
-            string curPort = target.CurrentPortfolioName;
-            target.CurrentPortfolioName = "My Portfolio";
-            Console.WriteLine(curPort);
+            //string curPort = target.CurrentPortfolioName;
+            //target.CurrentPortfolioName = "My Portfolio";
+            //Console.WriteLine(curPort);
 
-            List<PositionEntry> positions;
-            positions = target.CurrentPositions;
+            //List<PositionEntry> positions;
+            //positions = target.CurrentPositions;
 
             //target.CreatePortfolio();
         }
@@ -311,29 +311,29 @@ namespace TestFinanceObjects
         [TestMethod()]
         public void TestPositionEntry2()
         {
-            //PositionEntry pe;
-            PositionFeed pf;
-            FinanceService service = new FinanceService("test");
-            service.setUserCredentials(user, password);
-            GDataLoggingRequestFactory factoryLogging = new GDataLoggingRequestFactory("finance", ApplicationDriver.Name);
-            factoryLogging.MethodOverride = true;
-            factoryLogging.CombinedLogFileName = @"c:\xmllog.log";
-            service.RequestFactory = factoryLogging;
+            ////PositionEntry pe;
+            //PositionFeed pf;
+            //FinanceService service = new FinanceService("test");
+            //service.setUserCredentials(user, password);
+            //GDataLoggingRequestFactory factoryLogging = new GDataLoggingRequestFactory("finance", ApplicationDriver.Name);
+            //factoryLogging.MethodOverride = true;
+            //factoryLogging.CombinedLogFileName = @"c:\xmllog.log";
+            //service.RequestFactory = factoryLogging;
 
-            //pf = new PositionFeed(new Uri("http://finance.google.com/finance/feeds/financeCoding@gmail.com/portfolios/1/positions"), service);
-            pf = service.Query(new PositionQuery("http://finance.google.com/finance/feeds/default/portfolios/1/positions?returns=true"));
+            ////pf = new PositionFeed(new Uri("http://finance.google.com/finance/feeds/financeCoding@gmail.com/portfolios/1/positions"), service);
+            //pf = service.Query(new PositionQuery("http://finance.google.com/finance/feeds/default/portfolios/1/positions?returns=true"));
 
-            foreach (PositionEntry p in pf.Entries)
-            {
-                Console.WriteLine(p.PositionData.Shares);
-                Console.WriteLine(p.TransactionHerf);
+            //foreach (PositionEntry p in pf.Entries)
+            //{
+            //    Console.WriteLine(p.PositionData.Shares);
+            //    Console.WriteLine(p.TransactionHerf);
 
-                TransactionFeed tf = service.Query(new TransactionQuery(p.TransactionHerf + "?returns=true"));
-                foreach (TransactionEntry te in tf.Entries)
-                {
-                    Console.WriteLine(tf.Feed);
-                }
-            }
+            //    TransactionFeed tf = service.Query(new TransactionQuery(p.TransactionHerf + "?returns=true"));
+            //    foreach (TransactionEntry te in tf.Entries)
+            //    {
+            //        Console.WriteLine(tf.Feed);
+            //    }
+            //}
 
 
             
