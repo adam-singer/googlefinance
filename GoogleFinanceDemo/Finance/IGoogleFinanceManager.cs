@@ -34,7 +34,8 @@ namespace Finance
 
         Dictionary<string, PositionEntry> RetrieveSymbols(PortfolioEntry entry);
         Dictionary<string, PositionEntry> RetrieveSymbols(string title);
-        
+        List<TransactionEntry> RetrieveSymbolTransaction(PositionEntry entry);
+
         void DeleteSymbol(string symbolRemove, string title);
         void DeleteSymbol(string symbolRemove, PortfolioEntry portfolioEntry);
         void DeleteSymbol(PositionEntry positionEntry);

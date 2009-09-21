@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using System.IO;
+using System.Collections.Generic;
+using System.Configuration;
+
 using Finance;
 using Google.GData.Client;
 
@@ -26,13 +29,22 @@ namespace SP500
             TransactionEntry transactionEntry;
             Dictionary<string, PositionEntry> symbols;
             string fullSymbolName;
+            string user;
+            string password;
 
-
-            Console.Write("Enter google username: ");
-            string user = Console.ReadLine();
-
-            Console.Write("Enter google password: ");
-            string password = Console.ReadLine();
+            if (ConfigurationSettings.AppSettings["Username"] == "" || 
+                ConfigurationSettings.AppSettings["Password"] == "")
+            {
+                Console.Write("Enter google username: ");
+                user = Console.ReadLine();
+                Console.Write("Enter google password: ");
+                password = Console.ReadLine();
+            }
+            else
+            {
+                user = ConfigurationSettings.AppSettings["Username"];
+                password = ConfigurationSettings.AppSettings["Password"];
+            }
            
             GoogleFinanceManager googleFinanceManager = new GoogleFinanceManager(user, password);
             

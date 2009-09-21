@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Configuration;
 using Finance;
 using Google.GData.Client;
 namespace SP500
@@ -59,13 +60,14 @@ namespace SP500
             FinanceService = new FinanceService("GoogleFinanceManager");
             FinanceService.setUserCredentials(username, passsword);
 
-#if DEBUG
-            // Debugging requests and inserts.
-            GDataLoggingRequestFactory factoryLogging = new GDataLoggingRequestFactory("finance", ".NETSDK Finance");
-            factoryLogging.MethodOverride = true;
-            factoryLogging.CombinedLogFileName = @"xmllog.log";
-            FinanceService.RequestFactory = factoryLogging;
-#endif 
+            if (ConfigurationSettings.AppSettings["DEBUG_LOG"] == "true")
+            {
+                // Debugging requests and inserts.
+                GDataLoggingRequestFactory factoryLogging = new GDataLoggingRequestFactory("finance", ".NETSDK Finance");
+                factoryLogging.MethodOverride = true;
+                factoryLogging.CombinedLogFileName = ConfigurationSettings.AppSettings["DEBUG_LOGFILE"];
+                FinanceService.RequestFactory = factoryLogging;
+            }
         }
 
         #region Property for a list of current portolio names
@@ -367,11 +369,6 @@ namespace SP500
             }
             return symbols;
         }
-
-        //public List<TransactionEntry> RetrieveSymbolTransactions(string symbol)
-        //{
-        //    return null;
-        //}
 
         public List<TransactionEntry> RetrieveSymbolTransaction(PositionEntry entry)
         {
