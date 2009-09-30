@@ -93,7 +93,7 @@ namespace Finance.Web
         /// <summary>
         /// Default constructor that does nothing. 
         /// </summary>
-        public StockSummary(HtmlAgilityPack.HtmlDocument htmlDocument)
+        public StockSummary(HtmlDocument htmlDocument)
         {
             this.htmlDocument = htmlDocument;
 
