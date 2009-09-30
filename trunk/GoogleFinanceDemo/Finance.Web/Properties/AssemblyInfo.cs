@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Finance")]
-[assembly: AssemblyDescription(".NET Library for Google Finance API")]
+[assembly: AssemblyTitle("Finance.Web")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("googlefinance.googlecode.com")]
-[assembly: AssemblyProduct("Finance")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("Finance.Web")]
 [assembly: AssemblyCopyright("Copyright ©  2009")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("774bac65-2000-43dc-9296-15a5cf22842d")]
+[assembly: Guid("9e8f848a-03df-4958-a80c-e11449da9fe8")]
 
 // Version information for an assembly consists of the following four values:
 //
