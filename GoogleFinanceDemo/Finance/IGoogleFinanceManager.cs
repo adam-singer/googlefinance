@@ -8,15 +8,42 @@ namespace Finance
 {
     public interface IGoogleFinanceManager
     {
+        /// <summary>
+        /// Finance Service Proxy.
+        /// </summary>
         FinanceService FinanceService { get; }
 
+        /// <summary>
+        /// Enables the return of portfolio details. 
+        /// </summary>
         bool PortfolioDetails { set; get; }
+
+        /// <summary>
+        /// Enables the return of position details
+        /// </summary>
         bool PositionDetails { set; get; }
+
+        /// <summary>
+        /// Enables the return of transaction details
+        /// </summary>
         bool TransactionDetails { set; get; }
 
+        /// <summary>
+        /// Gets the portfolio names.
+        /// </summary>
         List<string> PortfolioNames {get;}
+
+        /// <summary>
+        /// Gets the portfolio names with associated portfolio entries.
+        /// </summary>
         Dictionary<string, PortfolioEntry> Portfolios {get;}
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="portfolioData"></param>
+        /// <returns></returns>
         PortfolioEntry CreatePortfolio(string title, PortfolioData portfolioData);
         PortfolioEntry CreatePortfolio(string title);
         PortfolioEntry CreatePortfolio(string title, string currencyCode);
