@@ -9,6 +9,7 @@ using System.Configuration;
 
 using Finance;
 using Google.GData.Client;
+using System.Net;
 
 namespace SP500
 {
@@ -45,7 +46,20 @@ namespace SP500
                 user = ConfigurationSettings.AppSettings["Username"];
                 password = ConfigurationSettings.AppSettings["Password"];
             }
-           
+
+            //if (ConfigurationSettings.AppSettings["ProxyServer"] != "" && ConfigurationSettings.AppSettings["ProxyPort"] != "")
+            //{
+            //    Uri proxyUri = new Uri(ConfigurationSettings.AppSettings["ProxyServer"] + ":" + ConfigurationSettings.AppSettings["ProxyPort"]);
+            //    WebProxy webProxy = new WebProxy(proxyUri);
+            //    webProxy.BypassProxyOnLocal = true;
+            //    System.Net.GlobalProxySelection.Select = webProxy;
+            //}
+            //else
+            //{
+            //    System.Net.GlobalProxySelection.Select = null;
+            //}
+
+
             GoogleFinanceManager googleFinanceManager = new GoogleFinanceManager(user, password);
             
             bool consoleRunning = true;
