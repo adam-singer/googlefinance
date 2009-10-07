@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finance", "Finance\Finance.csproj", "{EE664307-D757-4711-A723-F62EBC5D7AF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestFinanceObjects", "TestFinanceObjects\TestFinanceObjects.csproj", "{9439E875-227E-4822-8ABB-F02036B89AFA}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BF2FD0EB-E941-41F3-806B-0F893D4A5EC8}"
 	ProjectSection(SolutionItems) = preProject
 		GoogleFinanceDemo.vsmdi = GoogleFinanceDemo.vsmdi
@@ -17,10 +15,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HtmlAgilityPack", "HtmlAgil
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finance.Web", "Finance.Web\Finance.Web.csproj", "{02982D05-4EB1-42CA-853B-486A3BE65B28}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestFinanceObjects", "TestFinanceObjects\TestFinanceObjects.csproj", "{9439E875-227E-4822-8ABB-F02036B89AFA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finance.Web.Example", "Finance.Web.Example\Finance.Web.Example.csproj", "{953ECED2-0620-4A13-A0D5-C05B4ABB17C9}"
+EndProject
 Global
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = GoogleFinanceDemo.vsmdi
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -30,10 +29,6 @@ Global
 		{EE664307-D757-4711-A723-F62EBC5D7AF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE664307-D757-4711-A723-F62EBC5D7AF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE664307-D757-4711-A723-F62EBC5D7AF1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9439E875-227E-4822-8ABB-F02036B89AFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9439E875-227E-4822-8ABB-F02036B89AFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9439E875-227E-4822-8ABB-F02036B89AFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9439E875-227E-4822-8ABB-F02036B89AFA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9C1F9671-845B-442A-8EBD-956B2FBF76AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9C1F9671-845B-442A-8EBD-956B2FBF76AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C1F9671-845B-442A-8EBD-956B2FBF76AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -46,6 +41,14 @@ Global
 		{02982D05-4EB1-42CA-853B-486A3BE65B28}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02982D05-4EB1-42CA-853B-486A3BE65B28}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{02982D05-4EB1-42CA-853B-486A3BE65B28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9439E875-227E-4822-8ABB-F02036B89AFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9439E875-227E-4822-8ABB-F02036B89AFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9439E875-227E-4822-8ABB-F02036B89AFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9439E875-227E-4822-8ABB-F02036B89AFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{953ECED2-0620-4A13-A0D5-C05B4ABB17C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{953ECED2-0620-4A13-A0D5-C05B4ABB17C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{953ECED2-0620-4A13-A0D5-C05B4ABB17C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{953ECED2-0620-4A13-A0D5-C05B4ABB17C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
