@@ -127,13 +127,15 @@ namespace Finance.Web
         {
         }
 
-        public IncomeStatement QuarterlyData;
-        public IncomeStatement AnnualData;
+        // TODO: Refactor into some more intelligent member names.
 
-        public BalanceSheet QuarterlyData;
-        public BalanceSheet AnnualData;
+        public IncomeStatement IncomeStatementQuarterlyData;
+        public IncomeStatement IncomeStatementAnnualData;
 
-        public CashFlow QuarterlyData;
-        public CashFlow AnnualData;
+        public BalanceSheet BalanceSheetQuarterlyData;
+        public BalanceSheet BalanceSheetAnnualData;
+
+        public CashFlow CashFlowQuarterlyData;
+        public CashFlow CashFlowAnnualData;
     }
 }
