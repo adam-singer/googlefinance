@@ -7,6 +7,71 @@ using HtmlAgilityPack;
 namespace Finance.Web
 {
     /// <summary>
+    /// Percentage class helps with parsing out the format that google puts percents in.
+    /// </summary>
+    public class Percentage
+    {
+        string percentage;
+        double dpercentage;
+
+        public Percentage(string percentage)
+        {
+            this.percentage = percentage;
+            // Refactor this, I thought anything in () would be negative in terms of google's finance format....
+            // turns out this is wrong!
+            if (this.percentage.Contains('('))
+            {
+                dpercentage = double.Parse(this.percentage.Trim(new char[] { '(', ')', '%' }));
+            }
+            else
+            {
+                dpercentage = double.Parse(this.percentage.Trim(new char[] { '%' }));
+            }
+        }
+
+        public Percentage(double percentage)
+        {
+            dpercentage = percentage;
+            this.percentage = dpercentage.ToString();
+        }
+        public Percentage(int percentage)
+        {
+            dpercentage = double.Parse(percentage.ToString());
+            this.percentage = dpercentage.ToString();
+        }
+        public Percentage(decimal percentage)
+        {
+            dpercentage = double.Parse(percentage.ToString());
+            this.percentage = dpercentage.ToString();
+        }
+
+        public double ToDouble()
+        {
+            return dpercentage;
+        }
+
+        public int ToInt()
+        {
+            return (int)dpercentage;
+        }
+
+        public string ToString()
+        {
+            return percentage;
+        }
+
+        //public string ToOriginalString()
+        //{
+        //    return percentage;
+        //}
+
+        public decimal ToDecimal()
+        {
+            return (decimal)dpercentage;
+        }
+    }
+
+    /// <summary>
     /// Navigation Link that contains a text descriptsion.
     /// </summary>
     public class NavigateElement
@@ -86,6 +151,8 @@ namespace Finance.Web
 
     /// <summary>
     /// TODO: Enclose Summary, News, Financials and Related Companies into a single data structure.
+    /// TODO: Check if we need to create a baseuri, downloaded files do not need this, but when query from web we do for google links.
+    /// TODO: Fix anything that could be a negative value.
     /// </summary>
     public class StockSummary
     {
@@ -214,7 +281,7 @@ namespace Finance.Web
             return new NavigateElement()
             {
                 Text = n.InnerText.Replace(Environment.NewLine, ""),
-                Link = new Uri(n.Attributes["href"].Value)
+                Link = new Uri(new Uri(@"http://finance.google.com"),n.Attributes["href"].Value)
             };
         }
         #endregion 
@@ -321,7 +388,7 @@ namespace Finance.Web
                 
                 return new NavigateElement()
                     {
-                        Link = new Uri(n.Attributes["href"].Value),
+                        Link = new Uri(new Uri(@"http://www.google.com/finance"), n.Attributes["href"].Value),
                         Text = n.InnerText
                     }; 
             }
@@ -343,7 +410,7 @@ namespace Finance.Web
                 return new NavigateElement()
                 {
                     Text = ind.InnerText,
-                    Link = new Uri(ind.Attributes["href"].Value)
+                    Link = new Uri(new Uri(@"http://www.google.com/finance"), ind.Attributes["href"].Value)
                 };
             }
 
@@ -366,7 +433,7 @@ namespace Finance.Web
             get
             {
                 HtmlNode n = htmlDocument.GetElementbyId(RefernceId + "l");
-                return double.Parse(n.InnerText);
+                return double.Parse(n.InnerText.Trim(new char[] { '(', ')' }));
             }
         }
 
@@ -375,7 +442,7 @@ namespace Finance.Web
             get
             {
                 HtmlNode n = htmlDocument.GetElementbyId(RefernceId + "c");
-                string i = n.InnerText;
+                string i = n.InnerText.Trim(new char[] { '(', ')' });
                 return double.Parse(i); 
             } 
         }
@@ -385,8 +452,8 @@ namespace Finance.Web
             get
             {
                 HtmlNode n = htmlDocument.GetElementbyId(RefernceId + "cp");
-                string i = n.InnerText.TrimEnd(new char[] {'%'});
-                return double.Parse(i);
+                Percentage p = new Percentage(n.InnerText);
+                return p.ToDouble();
             }
         }
         // id="ref_[0-9]*_el", el = extended listing
@@ -394,7 +461,7 @@ namespace Finance.Web
             get
             {
                 HtmlNode n = htmlDocument.GetElementbyId(RefernceId + "el");
-                string i = n.InnerText;
+                string i = n.InnerText.Trim(new char[] { '(', ')' });
                 return double.Parse(i);
             }
         }
@@ -403,7 +470,7 @@ namespace Finance.Web
             get
             {
                 HtmlNode n = htmlDocument.GetElementbyId(RefernceId + "ec");
-                string i = n.InnerText;
+                string i = n.InnerText.Trim(new char[] { '(', ')'});
                 return double.Parse(i);
             }
         }
@@ -413,8 +480,8 @@ namespace Finance.Web
             get
             {
                 HtmlNode n = htmlDocument.GetElementbyId(RefernceId + "ecp");
-                string i = n.InnerText.Trim(new char[] {'(',')','%' });
-                return double.Parse(i);
+                Percentage p = new Percentage(n.InnerText);
+                return p.ToDouble();
             }
         }
         // id="ref_[0-9]*_elt", elt = extended listing time
@@ -437,7 +504,13 @@ namespace Finance.Web
             get
             {
                 HtmlNode n = htmlDocument.GetElementbyId("companyheader");
-                string[] a = n.InnerText.Split(new char[] {'&'});
+
+                string[] a = n.InnerText.Replace("&nbsp", " ").Split(new char[] { ';' });
+                
+                
+                //string[] a = n.InnerText.Split(new char[] {'&'});
+
+                
 
                 string companyName = a[0].Trim(new char[] { '\r', '\n' }).TrimEnd(new char[] { '&' });
                 string listingType = a[1].Split(new char[] { ',' })[0].Split(new char[] { '(' })[1];
@@ -661,7 +734,14 @@ namespace Finance.Web
                             {
                                 if (s.Name == "span" && s.InnerText == "P/E")
                                 {
-                                    return double.Parse(s.NextSibling.NextSibling.InnerText);
+                                    try
+                                    {
+                                        return double.Parse(s.NextSibling.NextSibling.InnerText);
+                                    }
+                                    catch (FormatException ex)
+                                    {
+                                        throw new DataNotAvailable(string.Format("Data is not available for this item: {0} = {1}", s.InnerText, s.NextSibling.NextSibling.InnerText), ex);
+                                    }
                                 }
                             }
                         }
@@ -690,9 +770,13 @@ namespace Finance.Web
                                     {
                                         return double.Parse(s.NextSibling.NextSibling.InnerText.Split(new char[] { '/' })[0]);
                                     }
-                                    catch 
+                                    catch (FormatException ex)
                                     {
-                                        return 0.0;
+                                        throw new DataNotAvailable(string.Format("Data is not available for this item: {0} = {1}", s.InnerText, s.NextSibling.NextSibling.InnerText.Split(new char[] { '/' })[0]), ex);
+                                    }
+                                    catch (IndexOutOfRangeException ex)
+                                    {
+                                        throw new DataNotAvailable(string.Format("Data is not available for this item: {0} = {1}", s.InnerText, s.NextSibling.NextSibling.InnerText, ex));
                                     }
                                 }
                             }
@@ -723,9 +807,13 @@ namespace Finance.Web
                                     {
                                         return double.Parse(s.NextSibling.NextSibling.InnerText.Split(new char[] { '/' })[1]);
                                     }
-                                    catch
+                                    catch (FormatException ex)
                                     {
-                                        return 0.0;
+                                        throw new DataNotAvailable(string.Format("Data is not available for this item: {0} = {1}", s.InnerText, s.NextSibling.NextSibling.InnerText.Split(new char[] { '/' })[1]), ex);
+                                    }
+                                    catch (IndexOutOfRangeException ex)
+                                    {
+                                        throw new DataNotAvailable(string.Format("Data is not available for this item: {0} = {1}", s.InnerText, s.NextSibling.NextSibling.InnerText), ex);
                                     }
                                 }
                             }
@@ -751,7 +839,14 @@ namespace Finance.Web
                             {
                                 if (s.Name == "span" && s.InnerText == "EPS")
                                 {
-                                    return double.Parse(s.NextSibling.NextSibling.InnerText);
+                                    try
+                                    {
+                                        return double.Parse(s.NextSibling.NextSibling.InnerText);
+                                    }
+                                    catch (FormatException ex)
+                                    {
+                                        throw new DataNotAvailable(string.Format("Data is not available for this item: {0} = {1}", s.InnerText, s.NextSibling.NextSibling.InnerText), ex);
+                                    }
                                 }
                             }
                         }
@@ -776,7 +871,13 @@ namespace Finance.Web
                             {
                                 if (s.Name == "span" && s.InnerText == "Shares")
                                 {
-                                    return s.NextSibling.NextSibling.InnerText;
+                                    try {
+                                        return s.NextSibling.NextSibling.InnerText;
+                                    }
+                                    catch (FormatException ex)
+                                    {
+                                        throw new DataNotAvailable(string.Format("Data is not available for this item: {0} = {1}", s.InnerText, s.NextSibling.NextSibling.InnerText), ex);
+                                    }
                                 }
                             }
                         }
@@ -800,7 +901,14 @@ namespace Finance.Web
                             {
                                 if (s.Name == "span" && s.InnerText == "Beta")
                                 {
-                                    return double.Parse(s.NextSibling.NextSibling.InnerText);
+                                    try
+                                    {
+                                        return double.Parse(s.NextSibling.NextSibling.InnerText);
+                                    }
+                                    catch (FormatException ex)
+                                    {
+                                        throw new DataNotAvailable(string.Format("Data is not available for this item: {0} = {1}", s.InnerText, s.NextSibling.NextSibling.InnerText), ex);
+                                    }
                                 }
                             }
                         }
@@ -824,7 +932,14 @@ namespace Finance.Web
                             {
                                 if (s.Name == "span" && s.InnerText == "Inst. own")
                                 {
-                                    return double.Parse(s.NextSibling.NextSibling.InnerText.TrimEnd(new char[] { '%' }));
+                                    try
+                                    {
+                                        return double.Parse(s.NextSibling.NextSibling.InnerText.TrimEnd(new char[] { '%' }));
+                                    }
+                                    catch (FormatException ex)
+                                    {
+                                        throw new DataNotAvailable(string.Format("Data is not available for this item: {0} = {1}", s.InnerText, s.NextSibling.NextSibling.InnerText), ex);
+                                    }
                                 }
                             }
                         }
