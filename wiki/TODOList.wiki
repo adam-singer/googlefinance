@@ -3,6 +3,7 @@
 
 == Details ==
 
+ * Documentation of objects and a road map of where this project plans to go.
 
  * Integration objects between Finance and Finance.Web libraries. 
 
