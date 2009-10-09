@@ -1,15 +1,13 @@
 #summary One-sentence summary of this page.
+#labels Phase-Requirements
 
-= Introduction =
+= Current TODO List =
 
-Current TODO List
-
-
-= Details =
+== Details ==
 
 
- * [http://www.google.com Integration] objects between Finance and Finance.Web libraries. 
+ * Integration objects between Finance and Finance.Web libraries. 
 
  * Need to implement proxy support.
 
- * Need to finish implementing the [http://code.google.com/p/googlefinance/source/browse/trunk/GoogleFinanceDemo/Finance.Web/ HistoricalPrices.cs], RelatedCompanies, StockFinancials, StockNews objects
+ * Need to finish implementing the [http://code.google.com/p/googlefinance/source/browse/trunk/GoogleFinanceDemo/Finance.Web/HistoricalPrices.cs HistoricalPrices], [http://code.google.com/p/googlefinance/source/browse/trunk/GoogleFinanceDemo/Finance.Web/RelatedCompanies.cs RelatedCompanies],[http://code.google.com/p/googlefinance/source/browse/trunk/GoogleFinanceDemo/Finance.Web/StockFinancials.cs StockFinancials],[http://code.google.com/p/googlefinance/source/browse/trunk/GoogleFinanceDemo/Finance.Web/StockNews.cs StockNews] objects
