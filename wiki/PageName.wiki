@@ -1,0 +1,15 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+Current TODO List
+
+
+= Details =
+
+
+ * [http://www.google.com Integration] objects between Finance and Finance.Web libraries. 
+
+ * Need to implement proxy support.
+
+ * Need to finish implementing the [http://code.google.com/p/googlefinance/source/browse/trunk/GoogleFinanceDemo/Finance.Web/ HistoricalPrices.cs], RelatedCompanies, StockFinancials, StockNews objects
