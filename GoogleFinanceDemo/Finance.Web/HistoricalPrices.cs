@@ -40,7 +40,7 @@ namespace Finance.Web
         WEEKLY
     }
 
-    class HistoricalPrices
+    public class HistoricalPrices
     {
         string googleQueryHistoricalPrices = "http://www.google.com/finance/historical?q=NASDAQ:CSCO";
 
@@ -110,13 +110,14 @@ http://www.google.com/finance/historical?cid=700146&startdate=Oct%209%2C%202008&
 
         public HistoricalPrices(HtmlDocument htmlDocument) : this(htmlDocument, new DateRange(), 0, HistoricalPeriod.DAILY)
         {
+            
+        }
+        public HistoricalPrices(HtmlDocument htmlDocument, DateRange dateRange, int startIndex, HistoricalPeriod historicalPeriod)
+        {
             // TODO: Fixup this constructor so it does the proper things.
             this.htmlDocument = htmlDocument;
             Prices = new List<HistoricalPrice>();
             Parse();
-        }
-        public HistoricalPrices(HtmlDocument htmlDocument, DateRange dateRange, int startIndex, HistoricalPeriod historicalPeriod)
-        {
         }
 
         public void Refresh(DateRange dateRange, int startIndex, HistoricalPeriod historicalPeriod)
@@ -126,24 +127,41 @@ http://www.google.com/finance/historical?cid=700146&startdate=Oct%209%2C%202008&
         private void Parse()
         {
             // Parse the <title /> of the web page and set it to Name
-            foreach (var name in htmlDocument.DocumentNode.ChildNodes)
+            // Parse the <meta name="Description" />
+            foreach (var n in htmlDocument.DocumentNode.ChildNodes)
             {
-                if (name.Name == "title")
+                if (n.Name == "html")
                 {
-                    Name = name.InnerText;
+                    try
+                    {
+                        HtmlNode name = n.FirstChild.FirstChild.NextSibling.NextSibling;
+                        Name = name.InnerText;
+                    }
+                    catch
+                    {
+                        Name = "";
+                    }
+
+                    try
+                    {
+                        HtmlNode description = n.FirstChild.FirstChild.NextSibling.NextSibling.NextSibling.NextSibling;
+                        if (description.Name == "meta" && description.Attributes["name"].Value == "Description")
+                        {
+                            Description = description.Attributes["content"].Value;
+                        }
+                        else
+                        {
+                            Description = "";
+                        }
+                    }
+                    catch
+                    {
+                        Description = "";
+                    }
                     break;
                 }
             }
 
-            // Parse the <meta name="Description" />
-            foreach (var description in htmlDocument.DocumentNode.ChildNodes)
-            {
-                if (description.Name == "meta" && description.Attributes["name"].Value == "Description")
-                {
-                    Description = description.InnerText;
-                    break;
-                }
-            }
             // For parsing the prices the first two tags we need to look for are.
             // <div id="prices" class="gf-table-wrapper sfe-break-bottom-16">
             // <table id="historical_price" class="gf-table">
@@ -156,29 +174,34 @@ http://www.google.com/finance/historical?cid=700146&startdate=Oct%209%2C%202008&
                 if (tbodyChild.Name == "tbody")
                 {
                     // We know that we have now found the table's body.
-                    nodePrices = tbodyChild.NextSibling.NextSibling;
+                    nodePrices = tbodyChild;
                     break;
                 }
             }
 
             foreach (var p in nodePrices.ChildNodes)
             {
-                if (p.Name == "tr")
+                if (p.Name == "tr" && !p.HasAttributes) 
                 {
-                    HtmlNode date = p.ChildNodes[0];
-                    HtmlNode open = p.ChildNodes[1];
-                    HtmlNode high = p.ChildNodes[2];
-                    HtmlNode low = p.ChildNodes[3];
-                    HtmlNode close = p.ChildNodes[4];
-                    HtmlNode volume = p.ChildNodes[5];
+                    // TODO: we could do some cleaning up here.
+                    string inner = p.InnerText.Trim(new char[] { '\n' }).Replace("\n\n","\n");
+                    string[] items = inner.Split(new char[] { '\n' });
+                    
+                    DateTime d = DateTime.Parse(items[0]);
+                    double o = double.Parse(items[1]);
+                    double h = double.Parse(items[2]);
+                    double l = double.Parse(items[3]);
+                    double c = double.Parse(items[4]);
+                    int v = int.Parse(items[5].Trim(new char[] { '\n' }).Replace(",",""));
+
                     HistoricalPrice historicalPrice = new HistoricalPrice()
                     {
-                        Date = DateTime.Parse(date.InnerText),
-                        Open = double.Parse(open.InnerText),
-                        High = double.Parse(high.InnerText),
-                        Low = double.Parse(low.InnerText),
-                        Close = double.Parse(close.InnerText),
-                        Volume = int.Parse(volume.InnerText.Trim(new char[] { ',' }))
+                        Date = d,
+                        Open = o,
+                        High = h,
+                        Low = l,
+                        Close = c,
+                        Volume = v
                     };
 
                     Prices.Add(historicalPrice);
