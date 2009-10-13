@@ -33,6 +33,28 @@ namespace Finance.Web.Example
                 @"NASDAQ:AAPL"
             };
 
+            List<string> listingHistoricalPricesFiles = new List<string>()
+            {
+                @"C:\tmp\CSCO\HistoricalPrices.htm",
+                @"C:\tmp\GOOG\HistoricalPrices.htm"
+            };
+
+            List<string> listingStockSummaryFiles = new List<string>()
+            {
+                @"C:\tmp\CSCO\Summary.htm",
+                @"C:\tmp\GOOG\Summary.htm"
+            };
+
+            // Loading from file system.
+            foreach (var file in listingHistoricalPricesFiles)
+            {
+                HtmlDocument document = new HtmlDocument();
+                document.Load(file);
+                HistoricalPrices historicalPrices = new HistoricalPrices(document);
+            }
+
+
+            // Loading from the web.
             foreach (var item in listings)
             {
                 HtmlDocument document = htmlWeb.Load(googleStockQuery + item);
