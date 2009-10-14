@@ -6,7 +6,7 @@ using HtmlAgilityPack;
 
 namespace Finance.Web
 {
-    class NewsFeed
+    public class NewsFeed
     {
         public Uri NewsLink { set; get; }
         public string Title { set; get; }
@@ -15,7 +15,7 @@ namespace Finance.Web
         public Uri RelatedNewsLinks { set; get; }
     }
 
-    class RelatedCompanies
+    public class RelatedCompanies
     {
         // http://www.google.com/finance/company_news?q=NASDAQ:CSCO&start={0}&num={1}
 
