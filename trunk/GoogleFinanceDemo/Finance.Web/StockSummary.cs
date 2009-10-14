@@ -60,11 +60,6 @@ namespace Finance.Web
             return percentage;
         }
 
-        //public string ToOriginalString()
-        //{
-        //    return percentage;
-        //}
-
         public decimal ToDecimal()
         {
             return (decimal)dpercentage;

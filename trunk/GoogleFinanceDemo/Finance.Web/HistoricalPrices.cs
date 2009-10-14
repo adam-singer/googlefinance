@@ -22,8 +22,27 @@ namespace Finance.Web
 
     public class DateRange
     {
+        //startdate=Oct+7%2C+2004&enddate=Oct+6%2C+2009
+        
         public DateTime StartDate { set; get; }
         public DateTime EndDate { set; get; }
+
+        public string StartDateAsParameter
+        {
+            get
+            {
+                return string.Format("startdate={0:MMM}+{1}%2C+{0:yyyy}", StartDate, StartDate.Day);
+            }
+        }
+
+        public string EndDateAsParameter
+        {
+            get
+            {
+                return string.Format("enddate={0:MMM}+{1}%2C+{0:yyyy}", EndDate, EndDate.Day);
+            }
+        }
+
         public DateRange(DateTime startDate, DateTime endDate)
         {
             StartDate = startDate;
@@ -36,13 +55,14 @@ namespace Finance.Web
 
     public enum HistoricalPeriod
     {
-        DAILY,
-        WEEKLY
+        Daily,
+        Weekly
     }
 
+    // TODO: add some exceptions and debugging.
     public class HistoricalPrices
     {
-        string googleQueryHistoricalPrices = "http://www.google.com/finance/historical?q=NASDAQ:CSCO";
+        string googleQueryHistoricalPrices = "http://www.google.com/finance/historical?q=";
 
         // http://www.google.com/finance/historical?q=NASDAQ:CSCO&histperiod=daily
         // http://www.google.com/finance/historical?q=NASDAQ:CSCO&histperiod=weekly
@@ -81,6 +101,7 @@ http://www.google.com/finance/historical?cid=700146&startdate=Oct%209%2C%202008&
 //         * chco = Chart Color
 //         
 
+        public HistoricalPeriod HistoricalPeriod { private set; get; }
 
         public string CompanyId { set; get; }
         public DateRange DateRange { private set; get; }
@@ -107,8 +128,21 @@ http://www.google.com/finance/historical?cid=700146&startdate=Oct%209%2C%202008&
         // <meta name="Description" />
         public string Description { private set; get; }
 
+        private string stock;
+        private string exchange;
 
-        public HistoricalPrices(HtmlDocument htmlDocument) : this(htmlDocument, new DateRange(), 0, HistoricalPeriod.DAILY)
+        public HistoricalPrices(string stock, string exchange) 
+        {
+            this.stock = stock;
+            this.exchange = exchange;
+
+            HtmlWeb htmlWeb = new HtmlWeb();
+            this.htmlDocument = htmlWeb.Load(googleQueryHistoricalPrices + exchange + ":" + stock);
+            Prices = new List<HistoricalPrice>();
+            Parse();
+        }
+        
+        public HistoricalPrices(HtmlDocument htmlDocument) : this(htmlDocument, new DateRange(), 0, HistoricalPeriod.Daily)
         {
             
         }
@@ -120,12 +154,37 @@ http://www.google.com/finance/historical?cid=700146&startdate=Oct%209%2C%202008&
             Parse();
         }
 
-        public void Refresh(DateRange dateRange, int startIndex, HistoricalPeriod historicalPeriod)
+        public void Refresh()
         {
+            HtmlWeb htmlWeb = new HtmlWeb();
+            string url =
+            googleQueryHistoricalPrices + exchange + ":" + stock;
+            this.htmlDocument = htmlWeb.Load(url);
+            Prices = new List<HistoricalPrice>();
+            Parse();
+        }
+
+        public void Refresh(DateRange dateRange, int startIndex, HistoricalPeriod historicalPeriod, int number)
+        {
+            this.HistoricalPeriod = historicalPeriod;
+            HtmlWeb htmlWeb = new HtmlWeb();
+            string url =
+            googleQueryHistoricalPrices + exchange + ":" + stock +
+                "&" + dateRange.StartDateAsParameter +
+                "&" + dateRange.EndDateAsParameter + 
+                "&" + "histperiod=" + Enum.GetName(typeof(HistoricalPeriod), historicalPeriod) +
+                "&" + "start=" + startIndex + 
+                "&" + "num=" + number;
+
+            this.htmlDocument = htmlWeb.Load(url);
+            Prices = new List<HistoricalPrice>();
+            Parse();
         }
 
         private void Parse()
         {
+            HtmlNode description = null;
+
             // Parse the <title /> of the web page and set it to Name
             // Parse the <meta name="Description" />
             foreach (var n in htmlDocument.DocumentNode.ChildNodes)
@@ -140,14 +199,34 @@ http://www.google.com/finance/historical?cid=700146&startdate=Oct%209%2C%202008&
                     catch
                     {
                         Name = "";
+                        try
+                        {
+                            HtmlNodeCollection names = n.FirstChild.NextSibling.ChildNodes;
+                            foreach (var v in names)
+                            {
+                                if (v.Name == "title")
+                                {
+                                    Name = v.InnerText;
+                                    description = v.NextSibling;
+                                    break;
+                                }
+                            }
+                            
+                        }
+                        catch
+                        {
+                            Name = "";
+                        }
                     }
+
+                    
 
                     try
                     {
-                        HtmlNode description = n.FirstChild.FirstChild.NextSibling.NextSibling.NextSibling.NextSibling;
-                        if (description.Name == "meta" && description.Attributes["name"].Value == "Description")
+                        HtmlNode description2 = n.FirstChild.FirstChild.NextSibling.NextSibling.NextSibling.NextSibling;
+                        if (description2.Name == "meta" && description2.Attributes["name"].Value == "Description")
                         {
-                            Description = description.Attributes["content"].Value;
+                            Description = description2.Attributes["content"].Value;
                         }
                         else
                         {
@@ -157,6 +236,34 @@ http://www.google.com/finance/historical?cid=700146&startdate=Oct%209%2C%202008&
                     catch
                     {
                         Description = "";
+
+                        try
+                        {
+                            //description = n.FirstChild.ChildNodes;
+                            if (description != null)
+                            {
+                                //foreach (var i in description)
+
+                                HtmlNode i = description.NextSibling;
+                                    if (i.Name == "meta" && i.HasAttributes && i.Attributes["name"].Value == "Description")
+                                    {
+                                        Description = i.Attributes["content"].Value;
+                                    }
+                                    else
+                                    {
+                                        Description = "";
+                                    }
+                                
+                            }
+                            else
+                            {
+                                Description = "";
+                            }
+                        }
+                        catch
+                        {
+                            Description = "";
+                        }
                     }
                     break;
                 }
@@ -166,9 +273,12 @@ http://www.google.com/finance/historical?cid=700146&startdate=Oct%209%2C%202008&
             // <div id="prices" class="gf-table-wrapper sfe-break-bottom-16">
             // <table id="historical_price" class="gf-table">
 
-            HtmlNode historicalPricesNode = htmlDocument.GetElementbyId("historical_price");
-            HtmlNodeCollection historicalPricesNode_ChildNodes = historicalPricesNode.ChildNodes;
             HtmlNode nodePrices = null;
+
+            HtmlNode historicalPricesNode = htmlDocument.GetElementbyId("historical_price");
+            
+            HtmlNodeCollection historicalPricesNode_ChildNodes = historicalPricesNode.ChildNodes;
+            
             foreach (var tbodyChild in historicalPricesNode_ChildNodes)
             {
                 if (tbodyChild.Name == "tbody")
@@ -177,6 +287,13 @@ http://www.google.com/finance/historical?cid=700146&startdate=Oct%209%2C%202008&
                     nodePrices = tbodyChild;
                     break;
                 }
+            }
+
+            // if tbody element was not found then we must be getting the htmldocument
+            // from the web. 
+            if (nodePrices == null)
+            {
+                nodePrices = htmlDocument.GetElementbyId("historical_price"); 
             }
 
             foreach (var p in nodePrices.ChildNodes)
@@ -207,7 +324,6 @@ http://www.google.com/finance/historical?cid=700146&startdate=Oct%209%2C%202008&
                     Prices.Add(historicalPrice);
                 }
             }
-
         }
     }
 }

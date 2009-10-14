@@ -8,7 +8,7 @@ using Finance;
 namespace Finance.Web
 {
     // Use stock news as the parent class for related companies 
-    class StockNews
+    public class StockNews
     {
         // http://www.google.com/finance/company_news?q={0}&num={1}
         // q = symbol to query

@@ -20,7 +20,7 @@ namespace Finance.Web.Example
 
             HtmlWeb htmlWeb = new HtmlWeb();
             List<string> listings = new List<string>() 
-            {   @"GOOG",
+            {   @"NASDAQ:GOOG",
                 @"NASDAQ:CSCO", 
                 @"NYSE:HTZ",
                 @"NYSE:MMM",
@@ -45,14 +45,100 @@ namespace Finance.Web.Example
                 @"C:\tmp\GOOG\Summary.htm"
             };
 
-            // Loading from file system.
+            // Loading historical prices from file system.
             foreach (var file in listingHistoricalPricesFiles)
             {
                 HtmlDocument document = new HtmlDocument();
                 document.Load(file);
                 HistoricalPrices historicalPrices = new HistoricalPrices(document);
+
+                historicalPrices.Prices.ForEach(p =>
+                    {
+                        Utils.WriteLine(ConsoleColor.Cyan, "{0}", historicalPrices.Name);
+                        Utils.WriteLine(ConsoleColor.Cyan, "Description={0}", historicalPrices.Description);
+                        Utils.WriteLine(ConsoleColor.Cyan, "==================================");
+                        Utils.WriteLine(ConsoleColor.Blue, "Date={0}", p.Date);
+                        Utils.WriteLine(ConsoleColor.Blue, "Open={0}", p.Open);
+                        Utils.WriteLine(ConsoleColor.Blue, "Low={0}", p.Low);
+                        Utils.WriteLine(ConsoleColor.Blue, "High={0}", p.High);
+                        Utils.WriteLine(ConsoleColor.Blue, "Close={0}", p.Close);
+                        Utils.WriteLine(ConsoleColor.Blue, "Volume={0}", p.Volume);
+                        Utils.WriteLine(ConsoleColor.Cyan, "==================================");
+                    });
+
+                Console.WriteLine("Press <Enter> ...");
+                Console.ReadLine();
             }
 
+            // Loading historical prices from the web
+            foreach (var item in listings)
+            {
+                string[] s = item.Split(new char[] { ':' });
+                HistoricalPrices historicalPrices = new HistoricalPrices(s[1], s[0]);
+
+
+                historicalPrices.Prices.ForEach(p =>
+                {
+                    Utils.WriteLine(ConsoleColor.Cyan, "{0}", historicalPrices.Name);
+                    Utils.WriteLine(ConsoleColor.Cyan, "Description={0}", historicalPrices.Description);
+                    Utils.WriteLine(ConsoleColor.Cyan, "==================================");
+                    Utils.WriteLine(ConsoleColor.Blue, "Date={0}", p.Date);
+                    Utils.WriteLine(ConsoleColor.Blue, "Open={0}", p.Open);
+                    Utils.WriteLine(ConsoleColor.Blue, "Low={0}", p.Low);
+                    Utils.WriteLine(ConsoleColor.Blue, "High={0}", p.High);
+                    Utils.WriteLine(ConsoleColor.Blue, "Close={0}", p.Close);
+                    Utils.WriteLine(ConsoleColor.Blue, "Volume={0}", p.Volume);
+                    Utils.WriteLine(ConsoleColor.Cyan, "==================================");
+                });
+
+                Console.WriteLine("Press <Enter> ...");
+                Console.ReadLine();
+
+                s = item.Split(new char[] { ':' });
+                historicalPrices = new HistoricalPrices(s[1], s[0]);
+                historicalPrices.Refresh(new DateRange(new DateTime(2007, 1, 1), new DateTime(2009, 1, 1)),
+                    1, HistoricalPeriod.Weekly, 200);
+
+                historicalPrices.Prices.ForEach(p =>
+                {
+                    Utils.WriteLine(ConsoleColor.Cyan, "{0}", historicalPrices.Name);
+                    Utils.WriteLine(ConsoleColor.Cyan, "Description={0}", historicalPrices.Description);
+                    Utils.WriteLine(ConsoleColor.Cyan, "==================================");
+                    Utils.WriteLine(ConsoleColor.Blue, "Date={0}", p.Date);
+                    Utils.WriteLine(ConsoleColor.Blue, "Open={0}", p.Open);
+                    Utils.WriteLine(ConsoleColor.Blue, "Low={0}", p.Low);
+                    Utils.WriteLine(ConsoleColor.Blue, "High={0}", p.High);
+                    Utils.WriteLine(ConsoleColor.Blue, "Close={0}", p.Close);
+                    Utils.WriteLine(ConsoleColor.Blue, "Volume={0}", p.Volume);
+                    Utils.WriteLine(ConsoleColor.Cyan, "==================================");
+                });
+
+                Console.WriteLine("Press <Enter> ...");
+                Console.ReadLine();
+
+                s = item.Split(new char[] { ':' });
+                historicalPrices = new HistoricalPrices(s[1], s[0]);
+                historicalPrices.Refresh(new DateRange(new DateTime(2005, 2, 23), new DateTime(2008, 6, 3)),
+                    1, HistoricalPeriod.Daily, 200);
+
+                historicalPrices.Prices.ForEach(p =>
+                {
+                    Utils.WriteLine(ConsoleColor.Cyan, "{0}", historicalPrices.Name);
+                    Utils.WriteLine(ConsoleColor.Cyan, "Description={0}", historicalPrices.Description);
+                    Utils.WriteLine(ConsoleColor.Cyan, "==================================");
+                    Utils.WriteLine(ConsoleColor.Blue, "Date={0}", p.Date);
+                    Utils.WriteLine(ConsoleColor.Blue, "Open={0}", p.Open);
+                    Utils.WriteLine(ConsoleColor.Blue, "Low={0}", p.Low);
+                    Utils.WriteLine(ConsoleColor.Blue, "High={0}", p.High);
+                    Utils.WriteLine(ConsoleColor.Blue, "Close={0}", p.Close);
+                    Utils.WriteLine(ConsoleColor.Blue, "Volume={0}", p.Volume);
+                    Utils.WriteLine(ConsoleColor.Cyan, "==================================");
+                });
+
+                Console.WriteLine("Press <Enter> ...");
+                Console.ReadLine();
+
+            }
 
             // Loading from the web.
             foreach (var item in listings)
@@ -193,7 +279,14 @@ namespace Finance.Web.Example
 
                 #region StockNews Example
                 #endregion 
+
+                Console.WriteLine("Press <Enter> ...");
+                Console.ReadLine();
+
             }
+
+            Utils.WriteLine(ConsoleColor.Red, "Press <Enter> to Exit ...");
+            Console.ReadLine();
         }
     }
 }
