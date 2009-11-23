@@ -166,6 +166,24 @@ namespace Finance.Web
             HtmlNode node4 = node3.FirstChild.NextSibling;
             RefernceId = node4.Attributes["id"].Value.TrimEnd(new char[] {'l'});
         }
+
+        private string stock;
+        private string exchange;
+        private string googleStockQuery = @"http://www.google.com/finance?q=";
+        public StockSummary(string stock, string exchange)
+        {
+            HtmlWeb htmlWeb = new HtmlWeb();
+            this.stock = stock;
+            this.exchange = exchange;
+            this.htmlDocument = htmlWeb.Load(googleStockQuery + exchange + ":" + stock);
+
+            // Parse out the main id to find the data for the stock we are looking at. 
+            HtmlNode node = this.htmlDocument.GetElementbyId("price-panel");
+            HtmlNode node2 = node.FirstChild.NextSibling;
+            HtmlNode node3 = node2.FirstChild.NextSibling;
+            HtmlNode node4 = node3.FirstChild.NextSibling;
+            RefernceId = node4.Attributes["id"].Value.TrimEnd(new char[] { 'l' });
+        }
         #endregion 
 
         #region Refernce Id
