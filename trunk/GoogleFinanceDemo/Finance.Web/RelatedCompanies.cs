@@ -12,7 +12,12 @@ namespace Finance.Web
         public string Title { set; get; }
         public string Source { set; get; }
         public string Snapshot { set; get; }
-        public Uri RelatedNewsLinks { set; get; }
+        public List<Uri> RelatedNewsLinks { set; get; }
+
+        public NewsFeed()
+        {
+            this.RelatedNewsLinks = new List<Uri>();
+        }
     }
 
     public class RelatedCompanies
@@ -24,7 +29,7 @@ namespace Finance.Web
         public RelatedCompanies(HtmlDocument htmlDocument)
         {
             this.htmlDocument = htmlDocument;
-
+            
             Parse();
         }
 
@@ -32,46 +37,49 @@ namespace Finance.Web
         {
             HtmlNode n = htmlDocument.GetElementbyId("news-main");
 
-            foreach (var node in n.ChildNodes)
-            {
-                if (node.GetType() == typeof(HtmlNode) && node.HasAttributes)
+            //if (n != null)
+            //{
+                foreach (var node in n.ChildNodes)
                 {
-                    if (node.Attributes["class"].Value == "g-section news sfe-break-bottom-16")
+                    if (node.GetType() == typeof(HtmlNode) && node.HasAttributes)
                     {
-                        NewsFeed newsFeed = new NewsFeed();
-
-                        foreach (var feedNode in node.ChildNodes)
+                        if (node.Attributes["class"].Value == "g-section news sfe-break-bottom-16")
                         {
-                            if (feedNode.Attributes["class"].Value == "name")
-                            {
-                                HtmlNode nn = HtmlNode.CreateNode(feedNode.InnerHtml);
-                                newsFeed.NewsLink = new Uri(nn.Attributes["href"].Value);
-                                newsFeed.Title = nn.InnerText;
-                            }
-                            else if (feedNode.Attributes["class"].Value == "byline")
-                            {
-                                HtmlNode nn = HtmlNode.CreateNode(feedNode.InnerHtml);
-                                newsFeed.Source = nn.NextSibling.InnerText;
-                            }
-                            else if (feedNode.Attributes["class"].Value == "g-c")
-                            {
-                                HtmlNode nn = HtmlNode.CreateNode(feedNode.NextSibling.InnerHtml);
-                                newsFeed.Snapshot = nn.InnerText;
+                            NewsFeed newsFeed = new NewsFeed();
 
-                                foreach (var nnn in nn.ChildNodes)
+                            foreach (var feedNode in node.ChildNodes)
+                            {
+                                if (feedNode.Attributes["class"].Value == "name")
                                 {
-                                    if (nnn.Attributes["class"].Value == "more-rel")
+                                    HtmlNode nn = HtmlNode.CreateNode(feedNode.InnerHtml);
+                                    newsFeed.NewsLink = new Uri(nn.Attributes["href"].Value);
+                                    newsFeed.Title = nn.InnerText;
+                                }
+                                else if (feedNode.Attributes["class"].Value == "byline")
+                                {
+                                    HtmlNode nn = HtmlNode.CreateNode(feedNode.InnerHtml);
+                                    newsFeed.Source = nn.NextSibling.InnerText;
+                                }
+                                else if (feedNode.Attributes["class"].Value == "g-c")
+                                {
+                                    HtmlNode nn = HtmlNode.CreateNode(feedNode.NextSibling.InnerHtml);
+                                    newsFeed.Snapshot = nn.InnerText;
+
+                                    foreach (var nnn in nn.ChildNodes)
                                     {
-                                        // TODO: really need to handle exceptions here.
+                                        if (nnn.Attributes["class"].Value == "more-rel")
+                                        {
+                                            // TODO: really need to handle exceptions here.
+                                        }
                                     }
                                 }
                             }
-                        }
 
-                        NewsFeeds.Add(newsFeed);
+                            NewsFeeds.Add(newsFeed);
+                        }
                     }
                 }
-            }
+            //}
         }
         #endregion
 
