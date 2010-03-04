@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestFinanceObjects", "TestF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finance.Web.Example", "Finance.Web.Example\Finance.Web.Example.csproj", "{953ECED2-0620-4A13-A0D5-C05B4ABB17C9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Predictor", "Predictor\Predictor.csproj", "{761C1154-273E-424F-B77F-E193A28BA1A8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{953ECED2-0620-4A13-A0D5-C05B4ABB17C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{953ECED2-0620-4A13-A0D5-C05B4ABB17C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{953ECED2-0620-4A13-A0D5-C05B4ABB17C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{761C1154-273E-424F-B77F-E193A28BA1A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{761C1154-273E-424F-B77F-E193A28BA1A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{761C1154-273E-424F-B77F-E193A28BA1A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{761C1154-273E-424F-B77F-E193A28BA1A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
